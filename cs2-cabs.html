@@ -38,7 +38,7 @@
     padding: 0 4rem; height: 56px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--ink); text-decoration: none; }
+  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--ink); }
   .nav-links { display: flex; gap: 2rem; }
   .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--terracotta); }
@@ -188,11 +188,11 @@
 <body>
 
 <nav>
-  <a href="index.html" class="nav-name">Sumit Arora</a>
+  <div class="nav-name">Sumit Arora</div>
   <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#contact">Contact</a>
+    <a href="#">Work</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
   </div>
 </nav>
 
@@ -242,6 +242,12 @@
     Read the story
   </div>
 </header>
+
+<!-- NDA NOTICE -->
+<div style="background:#F7F3ED; border-bottom: 1px solid #E8E0D4; padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem;">
+  <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="#A8998C" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="#A8998C" stroke-width="1.2" stroke-linecap="round"/></svg>
+  <span style="font-size:13px; color:#A8998C; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
+</div>
 
 <!-- 01 PRODUCT CONTEXT -->
 <hr class="divider">
