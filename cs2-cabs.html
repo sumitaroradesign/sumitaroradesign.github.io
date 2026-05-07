@@ -183,6 +183,45 @@
     .learnings-grid { grid-template-columns: 1fr; }
     .footer-nav { padding: 4rem 1.5rem; }
   }
+
+  /* Phones — fix nav crowding, scroll cue overlap, timeline dot, pullquote */
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .nav-name { font-size: 14px; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 12px; }
+
+    .hero-left { padding: 4.5rem 1.5rem 3rem; }
+    .scroll-cue { position: static; margin-top: 2rem; right: auto; bottom: auto; }
+
+    .hero-right { padding: 2.5rem 1.5rem; }
+    .meta-grid { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 1.5rem; }
+    .pill { padding: 0.85rem 1rem; gap: 0.85rem; }
+    .pill-val { font-size: 1.4rem; min-width: 60px; }
+    .pill-text { font-size: 12px; }
+
+    .section, .section-narrow { padding: 3.5rem 1.25rem; }
+    .problems-inner { padding: 0 1.25rem; }
+    .problems-bg { padding: 4rem 0; }
+    .impact-bg { padding: 4rem 0; }
+
+    .chapter { flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
+
+    .pullquote { margin: 2rem 0; padding-left: 1.25rem; }
+    .pullquote p { font-size: 1.05rem; }
+
+    .prose p { font-size: 15px; line-height: 1.8; }
+    .problem-card { padding: 1.5rem 1.25rem; }
+    .context-card, .learning-card { padding: 1.25rem 1.25rem; }
+    .is-insight, .is-solution { padding: 1.5rem 1.25rem; }
+
+    /* Research timeline: shorten the indent so the dot doesn't sit outside the column */
+    .research-timeline { padding-left: 1.25rem; margin-left: 0.25rem; }
+    .rt-item { padding: 0 0 2rem 1.25rem; }
+    .rt-dot { left: -1.85rem; }
+
+    .footer-nav { padding: 3.5rem 1.5rem; }
+  }
 </style>
 </head>
 <body>
