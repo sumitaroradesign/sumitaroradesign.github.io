@@ -1,189 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Study 01 — Global Localization Platform · Sumit Arora</title>
+<meta name="color-scheme" content="light dark">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+  (function(){
+    try{
+      var t=localStorage.getItem('theme');
+      if(t!=='light'&&t!=='dark'){ t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
+      document.documentElement.setAttribute('data-theme',t);
+    }catch(e){ document.documentElement.setAttribute('data-theme','light'); }
+  })();
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream: #F7F3ED;
-    --warm-white: #FDFAF6;
-    --sand: #E8E0D4;
-    --clay: #C4A882;
-    --terracotta: #B5714A;
-    --rust: #8C4A2F;
-    --ink: #2A1F14;
-    --muted: #7A6E64;
-    --soft: #A8998C;
-    --teal: #3D7A72;
-    --teal-light: #EAF3F1;
-    --gold: #C9932A;
-    --gold-light: #FBF3E2;
-    --blue: #3A5F8A;
-    --blue-light: #EAF0F7;
+    --bg: #F7F3ED; --surface: #FDFAF6; --border: #E8E0D4; --panel: #2A1F14;
+    --nav-bg: rgba(247,243,237,0.92);
+    --text: #2A1F14; --text-2: #685E54; --text-3: #756B60; --prose: #3D3228;
+    --accent: #A05A36; --accent-strong: #8C4A2F; --clay: #C4A882;
+    --teal: #2F6258; --gold: #8A6310;
+    --on-panel: #FDFAF6; --on-panel-2: rgba(253,250,246,0.78);
+    --on-panel-accent: rgba(196,168,130,0.95);
+    --accent-btn-bg: #A05A36; --accent-btn-text: #FFFFFF; --accent-btn-hover: #8C4A2F;
+    --impact-bg: #FBF3E2; --impact-border: #E8D9B8;
+    --dot-bg: #EAF3F1; --dot-text: #2F6258; --dot-border: rgba(61,122,114,0.35);
+    --shadow: rgba(42,31,20,0.1);
+    --focus: #2A1F14; --focus-on-panel: #C4A882;
+  }
+  :root[data-theme="dark"] {
+    --bg: #14100A; --surface: #221C14; --border: #3A3127; --panel: #1B1610;
+    --nav-bg: rgba(20,16,10,0.92);
+    --text: #F2ECE2; --text-2: #C7BBAC; --text-3: #AEA293; --prose: #D8CFC2;
+    --accent: #E0986B; --accent-strong: #E0986B; --clay: #D4B98E;
+    --teal: #6FB8A8; --gold: #E0B45A;
+    --on-panel: #F7F2EA; --on-panel-2: rgba(247,242,234,0.8);
+    --on-panel-accent: rgba(212,185,142,0.95);
+    --accent-btn-bg: #E0986B; --accent-btn-text: #14100A; --accent-btn-hover: #ECA87C;
+    --impact-bg: #221B10; --impact-border: #4A3A1E;
+    --dot-bg: #1B2D29; --dot-text: #6FB8A8; --dot-border: rgba(111,184,168,0.45);
+    --shadow: rgba(0,0,0,0.4);
+    --focus: #E0986B; --focus-on-panel: #D4B98E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14100A; --surface: #221C14; --border: #3A3127; --panel: #1B1610;
+      --nav-bg: rgba(20,16,10,0.92);
+      --text: #F2ECE2; --text-2: #C7BBAC; --text-3: #AEA293; --prose: #D8CFC2;
+      --accent: #E0986B; --accent-strong: #E0986B; --clay: #D4B98E;
+      --teal: #6FB8A8; --gold: #E0B45A;
+      --on-panel: #F7F2EA; --on-panel-2: rgba(247,242,234,0.8);
+      --on-panel-accent: rgba(212,185,142,0.95);
+      --accent-btn-bg: #E0986B; --accent-btn-text: #14100A; --accent-btn-hover: #ECA87C;
+      --impact-bg: #221B10; --impact-border: #4A3A1E;
+      --dot-bg: #1B2D29; --dot-text: #6FB8A8; --dot-border: rgba(111,184,168,0.45);
+      --shadow: rgba(0,0,0,0.4);
+      --focus: #E0986B; --focus-on-panel: #D4B98E;
+    }
   }
 
   html { scroll-behavior: smooth; }
-  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; font-size: 17px; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  .hero a:focus-visible, .problems-bg a:focus-visible, .next-cs a:focus-visible, .theme-toggle:focus-visible { outline-color: var(--focus-on-panel); }
 
   /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(247,243,237,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--sand);
-    padding: 0 4rem;
-    height: 56px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--ink); text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--terracotta); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 4rem; height: 56px; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s, border-color 0.3s; }
+  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--text); text-decoration: none; padding: 0.4rem 0; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--text-2); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; padding: 0.5rem 0; }
+  .nav-links a:hover { color: var(--accent); }
+  .theme-toggle { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s; }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle .icon-moon { display: inline-flex; } .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; } :root[data-theme="dark"] .theme-toggle .icon-sun { display: inline-flex; }
 
   /* HERO */
-  .hero {
-    min-height: 100vh; padding-top: 56px;
-    display: grid; grid-template-columns: 1.1fr 0.9fr;
-    position: relative; overflow: hidden;
-  }
-  .hero-left {
-    background: var(--ink);
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 6rem 4rem 5rem 5rem; position: relative;
-  }
-  .hero-left::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 80%, rgba(61,122,114,0.25) 0%, transparent 60%);
-  }
+  .hero { min-height: 100vh; padding-top: 56px; display: grid; grid-template-columns: 1.1fr 0.9fr; position: relative; overflow: hidden; }
+  .hero-left { background: var(--panel); display: flex; flex-direction: column; justify-content: flex-end; padding: 6rem 4rem 5rem 5rem; position: relative; transition: background 0.3s; }
+  .hero-left::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(61,122,114,0.25) 0%, transparent 60%); }
   .hero-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--clay); margin-bottom: 2rem; position: relative; }
-  .hero-title { font-family: 'Lora', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 500; line-height: 1.18; color: var(--warm-white); position: relative; margin-bottom: 1.5rem; }
+  .hero-title { font-family: 'Lora', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 500; line-height: 1.18; color: var(--on-panel); position: relative; margin-bottom: 1.5rem; }
   .hero-title em { font-style: italic; color: var(--clay); }
-  .hero-subtitle { font-size: 15px; color: rgba(253,250,246,0.5); max-width: 40ch; position: relative; line-height: 1.8; }
-  .hero-right { background: var(--warm-white); display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 4.5rem; }
+  .hero-subtitle { font-size: 15px; color: var(--on-panel-2); max-width: 40ch; position: relative; line-height: 1.8; }
+  .hero-right { background: var(--surface); display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 4.5rem; transition: background 0.3s; }
 
-  /* OUTCOME PILLS */
   .outcome-pills { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem; }
-  .pill {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 1.25rem; border-radius: 10px;
-    background: var(--cream); border: 1px solid var(--sand);
-  }
-  .pill-val { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 600; color: var(--rust); min-width: 70px; }
-  .pill-text { font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .pill { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); }
+  .pill-val { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent-strong); min-width: 70px; }
+  .pill-text { font-size: 13px; color: var(--text-2); line-height: 1.4; }
 
-  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; border-top: 1px solid var(--sand); padding-top: 2rem; }
-  .meta-item label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.35rem; }
-  .meta-item span { font-family: 'Lora', serif; font-size: 14px; color: var(--ink); line-height: 1.4; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+  .meta-item label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.35rem; }
+  .meta-item span { font-family: 'Lora', serif; font-size: 14px; color: var(--text); line-height: 1.4; }
 
-  .scroll-cue { position: absolute; bottom: 2.5rem; right: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); animation: float 2.5s ease-in-out infinite; }
+  .scroll-cue { position: absolute; bottom: 2.5rem; right: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-panel-2); animation: float 2.5s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
   /* LAYOUT */
   .section { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; }
   .section-narrow { max-width: 740px; margin: 0 auto; padding: 6rem 4rem; }
-  .divider { border: none; border-top: 1px solid var(--sand); margin: 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
   /* CHAPTER */
   .chapter { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
-  .chapter-num { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); flex-shrink: 0; }
-  .chapter-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; line-height: 1.25; color: var(--ink); }
+  .chapter-num { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
+  .chapter-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; line-height: 1.25; color: var(--text); }
 
   /* PROSE */
-  .prose p { margin-bottom: 1.4rem; color: #3D3228; max-width: 68ch; line-height: 1.85; }
+  .prose p { margin-bottom: 1.4rem; color: var(--prose); max-width: 68ch; line-height: 1.85; }
   .prose p:last-child { margin-bottom: 0; }
-  .pullquote { border-left: 3px solid var(--terracotta); margin: 2.5rem 0; padding: 0.5rem 0 0.5rem 2rem; }
-  .pullquote p { font-family: 'Lora', serif; font-size: 1.15rem; font-style: italic; color: var(--ink); line-height: 1.65; max-width: 54ch; }
+  .pullquote { border-left: 3px solid var(--accent); margin: 2.5rem 0; padding: 0.5rem 0 0.5rem 2rem; }
+  .pullquote p { font-family: 'Lora', serif; font-size: 1.15rem; font-style: italic; color: var(--text); line-height: 1.65; max-width: 54ch; }
 
-  /* PRODUCT CONTEXT */
+  /* CONTEXT */
   .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .context-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 10px; padding: 1.5rem 1.75rem; }
-  .context-card h4 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.75rem; }
+  .context-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.75rem; }
+  .context-card h4 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
   .context-list { list-style: none; }
-  .context-list li { font-size: 14px; color: var(--muted); padding: 0.35rem 0; border-bottom: 1px solid var(--sand); line-height: 1.5; display: flex; gap: 0.6rem; }
+  .context-list li { font-size: 14px; color: var(--text-2); padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.5; display: flex; gap: 0.6rem; }
   .context-list li:last-child { border-bottom: none; }
   .context-list li::before { content: '—'; color: var(--clay); flex-shrink: 0; }
 
   /* PROBLEMS */
-  .problems-bg { background: var(--ink); padding: 6rem 0; }
+  .problems-bg { background: var(--panel); padding: 6rem 0; transition: background 0.3s; }
   .problems-inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
-  .problems-inner .chapter-title { color: var(--warm-white); }
+  .problems-inner .chapter-title { color: var(--on-panel); }
   .problems-inner .chapter-num { color: var(--clay); }
-
   .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; margin-top: 2.5rem; }
   .problem-card { background: rgba(255,255,255,0.04); padding: 2rem; transition: background 0.25s; }
   .problem-card:hover { background: rgba(255,255,255,0.07); }
-  .problem-num { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(196,168,130,0.6); margin-bottom: 0.75rem; }
-  .problem-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--warm-white); margin-bottom: 0.6rem; line-height: 1.35; }
-  .problem-body { font-size: 13px; color: rgba(253,250,246,0.45); line-height: 1.7; }
+  .problem-num { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-panel-accent); margin-bottom: 0.75rem; }
+  .problem-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--on-panel); margin-bottom: 0.6rem; line-height: 1.35; }
+  .problem-body { font-size: 13px; color: var(--on-panel-2); line-height: 1.7; }
+  .problems-intro { font-size: 15px; color: var(--on-panel-2); max-width: 60ch; line-height: 1.8; margin-bottom: 0; }
 
   /* RESEARCH */
   .research-flow { display: flex; align-items: flex-start; gap: 0; margin-top: 2.5rem; position: relative; }
   .r-step { flex: 1; position: relative; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .r-step.visible { opacity: 1; transform: translateY(0); }
-  .r-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--teal-light); border: 1.5px solid rgba(61,122,114,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.85rem; font-size: 11px; font-weight: 500; color: var(--teal); }
-  .r-label { font-size: 12px; font-weight: 500; color: var(--ink); text-align: center; margin-bottom: 0.3rem; line-height: 1.3; }
-  .r-sub { font-size: 11px; color: var(--soft); text-align: center; line-height: 1.5; padding: 0 0.25rem; }
-  .r-connector { flex-shrink: 0; width: 24px; height: 1px; background: var(--sand); margin-top: 20px; }
+  .r-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--dot-bg); border: 1.5px solid var(--dot-border); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.85rem; font-size: 11px; font-weight: 500; color: var(--dot-text); }
+  .r-label { font-size: 12px; font-weight: 500; color: var(--text); text-align: center; margin-bottom: 0.3rem; line-height: 1.3; }
+  .r-sub { font-size: 11px; color: var(--text-3); text-align: center; line-height: 1.5; padding: 0 0.25rem; }
+  .r-connector { flex-shrink: 0; width: 24px; height: 1px; background: var(--border); margin-top: 20px; }
 
-  /* INSIGHT → SOLUTION CARDS */
+  /* INSIGHT → SOLUTION */
   .is-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .is-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--sand); border-radius: 12px; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .is-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .is-card.visible { opacity: 1; transform: translateY(0); }
-  .is-insight { background: var(--warm-white); padding: 1.75rem 2rem; border-right: 1px solid var(--sand); }
-  .is-solution { background: var(--cream); padding: 1.75rem 2rem; }
+  .is-insight { background: var(--surface); padding: 1.75rem 2rem; border-right: 1px solid var(--border); }
+  .is-solution { background: var(--bg); padding: 1.75rem 2rem; }
   .is-label { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .is-insight .is-label { color: var(--soft); }
+  .is-insight .is-label { color: var(--text-3); }
   .is-solution .is-label { color: var(--teal); }
-  .is-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; line-height: 1.35; margin-bottom: 0.5rem; color: var(--ink); }
-  .is-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .is-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; line-height: 1.35; margin-bottom: 0.5rem; color: var(--text); }
+  .is-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
   .is-bullets { list-style: none; margin-top: 0.5rem; }
-  .is-bullets li { font-size: 13px; color: var(--muted); padding: 0.2rem 0; display: flex; gap: 0.5rem; line-height: 1.5; }
+  .is-bullets li { font-size: 13px; color: var(--text-2); padding: 0.2rem 0; display: flex; gap: 0.5rem; line-height: 1.5; }
   .is-bullets li::before { content: '→'; color: var(--teal); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
 
   /* IMPACT */
-  .impact-bg { background: var(--gold-light); border-top: 1px solid #E8D9B8; border-bottom: 1px solid #E8D9B8; padding: 6rem 0; }
+  .impact-bg { background: var(--impact-bg); border-top: 1px solid var(--impact-border); border-bottom: 1px solid var(--impact-border); padding: 6rem 0; transition: background 0.3s; }
   .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 860px; margin: 2.5rem auto 0; }
-  .metric { text-align: center; padding: 2rem; border-right: 1px solid #E8D9B8; opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .metric { text-align: center; padding: 2rem; border-right: 1px solid var(--impact-border); opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .metric:last-child { border-right: none; }
   .metric.visible { opacity: 1; transform: translateY(0); }
-  .metric-value { font-family: 'Lora', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--rust); line-height: 1; margin-bottom: 0.5rem; display: block; }
-  .metric-label { font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 20ch; margin: 0 auto; }
-  .metric-context { font-size: 11px; color: var(--soft); margin-top: 0.35rem; }
+  .metric-value { font-family: 'Lora', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--accent-strong); line-height: 1; margin-bottom: 0.5rem; display: block; }
+  .metric-label { font-size: 13px; color: var(--text-2); line-height: 1.5; max-width: 20ch; margin: 0 auto; }
+  .metric-context { font-size: 11px; color: var(--text-3); margin-top: 0.35rem; }
 
   /* LEARNINGS */
   .learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-  .learning-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 10px; padding: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .learning-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.45s ease, transform 0.45s ease; }
   .learning-card.visible { opacity: 1; transform: translateY(0); }
-  .learning-num { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.5rem; }
-  .learning-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.35; }
-  .learning-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .learning-num { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
+  .learning-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; line-height: 1.35; }
+  .learning-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-  /* NEXT CASE STUDY */
-  .next-cs {
-    background: var(--ink); padding: 5rem 4rem; text-align: center;
-    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
-  }
-  .next-label { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--soft); }
-  .next-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--warm-white); font-style: italic; }
-  .next-btn {
-    display: inline-flex; align-items: center; gap: 0.75rem;
-    padding: 0.85rem 2rem; border-radius: 40px;
-    background: var(--terracotta); color: white;
-    font-size: 14px; font-weight: 400; letter-spacing: 0.04em;
-    text-decoration: none; transition: background 0.2s, transform 0.15s;
-  }
-  .next-btn:hover { background: var(--rust); transform: translateY(-1px); }
+  /* NEXT */
+  .next-cs { background: var(--panel); padding: 5rem 4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; transition: background 0.3s; }
+  .next-label { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--on-panel-2); }
+  .next-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--on-panel); font-style: italic; }
+  .next-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.85rem 2rem; border-radius: 40px; background: var(--accent-btn-bg); color: var(--accent-btn-text); font-size: 14px; font-weight: 400; letter-spacing: 0.04em; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .next-btn:hover { background: var(--accent-btn-hover); transform: translateY(-1px); }
 
   /* FADE IN */
   .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .fade-in, .r-step, .is-card, .metric, .learning-card { opacity: 1 !important; transform: none !important; }
+  }
 
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
@@ -195,9 +213,9 @@
     .problem-grid { grid-template-columns: 1fr; }
     .context-grid { grid-template-columns: 1fr; }
     .is-card { grid-template-columns: 1fr; }
-    .is-insight { border-right: none; border-bottom: 1px solid var(--sand); }
+    .is-insight { border-right: none; border-bottom: 1px solid var(--border); }
     .metrics-row { grid-template-columns: 1fr; }
-    .metric { border-right: none; border-bottom: 1px solid #E8D9B8; }
+    .metric { border-right: none; border-bottom: 1px solid var(--impact-border); }
     .metric:last-child { border-bottom: none; }
     .learnings-grid { grid-template-columns: 1fr; }
     .research-flow { flex-wrap: wrap; gap: 1rem; }
@@ -205,45 +223,32 @@
     .r-step { flex: 0 0 calc(50% - 0.5rem); }
     .next-cs { padding: 4rem 1.5rem; }
   }
-
-  /* Phones — fix nav crowding, scroll cue overlap, tight prose */
   @media (max-width: 600px) {
     nav { padding: 0 1.25rem; }
     .nav-name { font-size: 14px; }
     .nav-links { gap: 1.25rem; }
-    .nav-links a { font-size: 12px; }
-
+    .nav-links a:not(.theme-toggle) { font-size: 12px; }
     .hero-left { padding: 4.5rem 1.5rem 3rem; }
-    /* Move scroll cue out of absolute positioning so it doesn't sit on the subtitle */
     .scroll-cue { position: static; margin-top: 2rem; right: auto; bottom: auto; }
-
     .hero-right { padding: 2.5rem 1.5rem; }
     .meta-grid { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 1.5rem; }
     .pill { padding: 0.85rem 1rem; gap: 0.85rem; }
     .pill-val { font-size: 1.4rem; min-width: 60px; }
     .pill-text { font-size: 12px; }
-
     .section, .section-narrow { padding: 3.5rem 1.25rem; }
     .problems-inner { padding: 0 1.25rem; }
     .problems-bg { padding: 4rem 0; }
     .impact-bg { padding: 4rem 0; }
-
-    /* Stack chapter number above title so it doesn't squeeze the title */
     .chapter { flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
-
-    /* Pullquote: reduce indent so text doesn't get a tiny column */
     .pullquote { margin: 2rem 0; padding-left: 1.25rem; }
     .pullquote p { font-size: 1.05rem; }
-
     .prose p { font-size: 15px; line-height: 1.8; }
     .problem-card { padding: 1.5rem 1.25rem; }
     .context-card, .learning-card { padding: 1.25rem 1.25rem; }
     .is-insight, .is-solution { padding: 1.5rem 1.25rem; }
-
     .research-flow { gap: 1.25rem; }
     .r-step { flex: 0 0 calc(50% - 0.625rem); }
     .r-sub { font-size: 10px; }
-
     .next-cs { padding: 3.5rem 1.5rem; }
   }
 </style>
@@ -256,10 +261,13 @@
     <a href="index.html#work">Work</a>
     <a href="index.html#about">About</a>
     <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark theme" aria-pressed="false">
+      <span class="icon-moon" aria-hidden="true"><svg width="16" height="16" fill="none" viewBox="0 0 17 17"><path d="M14 9.5A5.5 5.5 0 017.5 3a5.5 5.5 0 100 11c2.5 0 4.6-1.7 5.2-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
+      <span class="icon-sun" aria-hidden="true"><svg width="16" height="16" fill="none" viewBox="0 0 17 17"><circle cx="8.5" cy="8.5" r="3.2" stroke="currentColor" stroke-width="1.3"/><path d="M8.5 1v1.6M8.5 14.4V16M1 8.5h1.6M14.4 8.5H16M3.2 3.2l1.1 1.1M12.7 12.7l1.1 1.1M3.2 13.8l1.1-1.1M12.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+    </button>
   </div>
 </nav>
 
-<!-- HERO -->
 <header class="hero">
   <div class="hero-left">
     <div class="hero-tag">Case Study 01 &nbsp;·&nbsp; Enterprise UX &nbsp;·&nbsp; Internal Platform</div>
@@ -268,57 +276,31 @@
   </div>
   <div class="hero-right">
     <div class="outcome-pills">
-      <div class="pill">
-        <div class="pill-val">40%</div>
-        <div class="pill-text">Reduction in task completion time across core translation workflows</div>
-      </div>
-      <div class="pill">
-        <div class="pill-val">50%</div>
-        <div class="pill-text">Improvement in content search and discovery experience</div>
-      </div>
-      <div class="pill">
-        <div class="pill-val">60%</div>
-        <div class="pill-text">Reduction in SLA breaches across markets</div>
-      </div>
+      <div class="pill"><div class="pill-val">40%</div><div class="pill-text">Reduction in task completion time across core translation workflows</div></div>
+      <div class="pill"><div class="pill-val">50%</div><div class="pill-text">Improvement in content search and discovery experience</div></div>
+      <div class="pill"><div class="pill-val">60%</div><div class="pill-text">Reduction in SLA breaches across markets</div></div>
     </div>
     <div class="meta-grid">
-      <div class="meta-item">
-        <label>My role</label>
-        <span>Lead UX Designer &amp; Product Strategist</span>
-      </div>
-      <div class="meta-item">
-        <label>Scope</label>
-        <span>End-to-end: research, system design, delivery</span>
-      </div>
-      <div class="meta-item">
-        <label>Scale</label>
-        <span>63 markets, global user base</span>
-      </div>
-      <div class="meta-item">
-        <label>Domain</label>
-        <span>Localization, content management, Internal Platform</span>
-      </div>
+      <div class="meta-item"><label>My role</label><span>Lead UX Designer &amp; Product Strategist</span></div>
+      <div class="meta-item"><label>Scope</label><span>End-to-end: research, system design, delivery</span></div>
+      <div class="meta-item"><label>Scale</label><span>63 markets, global user base</span></div>
+      <div class="meta-item"><label>Domain</label><span>Localization, content management, Internal Platform</span></div>
     </div>
   </div>
   <div class="scroll-cue">
-    <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Read the story
   </div>
 </header>
 
-<!-- NDA NOTICE -->
-<div style="background:#F7F3ED; border-bottom: 1px solid #E8E0D4; padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem;">
-  <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="#A8998C" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="#A8998C" stroke-width="1.2" stroke-linecap="round"/></svg>
-  <span style="font-size:13px; color:#A8998C; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
+<div style="background:var(--bg); border-bottom: 1px solid var(--border); padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem; color:var(--text-2);">
+  <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+  <span style="font-size:13px; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
 </div>
 
-<!-- 01 PRODUCT CONTEXT -->
 <hr class="divider">
 <div class="section-narrow fade-in">
-  <div class="chapter">
-    <span class="chapter-num">01</span>
-    <h2 class="chapter-title">What this product is, and why it matters</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">01</span><h2 class="chapter-title">What this product is, and why it matters</h2></div>
   <div class="prose">
     <p>The platform is an internal localization system used across every IKEA market to manage the translation and adaptation of content at scale. It sits at the centre of a complex content supply chain — deeply integrated with both the Product Information Management (PIM) and Digital Asset Management (DAM) systems.</p>
     <p>Every piece of customer-facing content that IKEA produces — product specifications, marketing copy, store communications, labels — passes through this system before it reaches a market.</p>
@@ -345,299 +327,130 @@
   </div>
 </div>
 
-<!-- 01b MY ROLE -->
 <hr class="divider">
 <div class="section-narrow fade-in">
-  <div class="chapter">
-    <span class="chapter-num">My role</span>
-    <h2 class="chapter-title">Leading design across the full lifecycle</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">My role</span><h2 class="chapter-title">Leading design across the full lifecycle</h2></div>
   <div class="prose">
     <p>I led the end-to-end UX design for this platform while contributing to product strategy. My work spanned user research, journey mapping, system architecture decisions, and close collaboration with regional teams, engineers, and business stakeholders across multiple markets.</p>
     <p>This wasn't a single project with a clear end date — it was an ongoing modernization effort, built iteratively alongside users and released market by market until full global rollout.</p>
   </div>
 </div>
 
-<!-- 02 PROBLEM -->
 <div class="problems-bg">
   <div class="problems-inner">
-    <div class="chapter">
-      <span class="chapter-num">02</span>
-      <h2 class="chapter-title">What was broken</h2>
-    </div>
-    <p style="font-size:15px; color:rgba(253,250,246,0.5); max-width:60ch; line-height:1.8; margin-bottom: 0;">As part of a broader legacy modernization program, a new platform was needed to support IKEA's expansion and an ever-growing range of content types. The old solution had reached its limits in almost every dimension.</p>
+    <div class="chapter"><span class="chapter-num">02</span><h2 class="chapter-title">What was broken</h2></div>
+    <p class="problems-intro">As part of a broader legacy modernization program, a new platform was needed to support IKEA's expansion and an ever-growing range of content types. The old solution had reached its limits in almost every dimension.</p>
     <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-num">Problem 01</div>
-        <div class="problem-title">No visibility into what matters</div>
-        <div class="problem-body">Users had no overview or shared backlog. They clicked around guessing what was new or urgent, and often defaulted to what felt familiar — not what was highest priority for the business.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 02</div>
-        <div class="problem-title">Fully manual, nothing reusable</div>
-        <div class="problem-body">Translators had to click into every single piece of text individually. Content could not be reused across formats, forcing manual copy-paste and creating inconsistency at scale.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 03</div>
-        <div class="problem-title">Fragmented metadata and constant context-switching</div>
-        <div class="problem-body">Critical information lived in separate screens or external tools. Users had to leave the platform to get what they needed, breaking flow and reducing the chance they'd check important context at all.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 04</div>
-        <div class="problem-title">No traceability of changes</div>
-        <div class="problem-body">There was no audit trail for translation changes, which created serious compliance risks and made it impossible to confirm product warranty accuracy across markets.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 05</div>
-        <div class="problem-title">Search that worked against users</div>
-        <div class="problem-body">Search required users to know the product category upfront — a system logic that didn't match how people actually think. The result was hit-and-trial searching and results that were slow to parse.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 06</div>
-        <div class="problem-title">Workflow states too limited to support real work</div>
-        <div class="problem-body">Legal reviews and proofreading happened outside the system entirely — in downloaded Excel files. Collaboration was a workaround, not a feature.</div>
-      </div>
+      <div class="problem-card"><div class="problem-num">Problem 01</div><div class="problem-title">No visibility into what matters</div><div class="problem-body">Users had no overview or shared backlog. They clicked around guessing what was new or urgent, and often defaulted to what felt familiar — not what was highest priority for the business.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 02</div><div class="problem-title">Fully manual, nothing reusable</div><div class="problem-body">Translators had to click into every single piece of text individually. Content could not be reused across formats, forcing manual copy-paste and creating inconsistency at scale.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 03</div><div class="problem-title">Fragmented metadata and constant context-switching</div><div class="problem-body">Critical information lived in separate screens or external tools. Users had to leave the platform to get what they needed, breaking flow and reducing the chance they'd check important context at all.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 04</div><div class="problem-title">No traceability of changes</div><div class="problem-body">There was no audit trail for translation changes, which created serious compliance risks and made it impossible to confirm product warranty accuracy across markets.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 05</div><div class="problem-title">Search that worked against users</div><div class="problem-body">Search required users to know the product category upfront — a system logic that didn't match how people actually think. The result was hit-and-trial searching and results that were slow to parse.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 06</div><div class="problem-title">Workflow states too limited to support real work</div><div class="problem-body">Legal reviews and proofreading happened outside the system entirely — in downloaded Excel files. Collaboration was a workaround, not a feature.</div></div>
     </div>
   </div>
 </div>
 
-<!-- 03 RESEARCH -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">03</span>
-    <h2 class="chapter-title">How I understood the problem</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">03</span><h2 class="chapter-title">How I understood the problem</h2></div>
   <div class="prose">
     <p>I began with an investigative evaluation study — a structured analysis of the legacy system's actual usage patterns. This was followed by a survey sent to understand which parts of the flow had the most friction, who was using the application, and what they did most often.</p>
     <p>Survey responses and previously collected pain points were then mapped into twelve distinct problem areas. From there, I conducted a competitive assessment of comparable tools on the market to evaluate whether we should build or buy, and identified the gaps between IKEA's technical capabilities and what was currently on offer.</p>
   </div>
-
   <div class="research-flow" id="research-flow">
-    <div class="r-step">
-      <div class="r-dot">01</div>
-      <div class="r-label">Evaluative study</div>
-      <div class="r-sub">Investigated legacy usage patterns</div>
-    </div>
+    <div class="r-step"><div class="r-dot">01</div><div class="r-label">Evaluative study</div><div class="r-sub">Investigated legacy usage patterns</div></div>
     <div class="r-connector"></div>
-    <div class="r-step">
-      <div class="r-dot">02</div>
-      <div class="r-label">User survey</div>
-      <div class="r-sub">Mapped friction, roles, and task frequency</div>
-    </div>
+    <div class="r-step"><div class="r-dot">02</div><div class="r-label">User survey</div><div class="r-sub">Mapped friction, roles, and task frequency</div></div>
     <div class="r-connector"></div>
-    <div class="r-step">
-      <div class="r-dot">03</div>
-      <div class="r-label">Pain synthesis</div>
-      <div class="r-sub">Mapped findings into 12 problem areas</div>
-    </div>
+    <div class="r-step"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
     <div class="r-connector"></div>
-    <div class="r-step">
-      <div class="r-dot">04</div>
-      <div class="r-label">Competitive audit</div>
-      <div class="r-sub">Assessed build vs buy for each capability</div>
-    </div>
+    <div class="r-step"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
     <div class="r-connector"></div>
-    <div class="r-step">
-      <div class="r-dot">05</div>
-      <div class="r-label">Gap analysis</div>
-      <div class="r-sub">Shaped architecture and data model</div>
-    </div>
+    <div class="r-step"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
     <div class="r-connector"></div>
-    <div class="r-step">
-      <div class="r-dot">06</div>
-      <div class="r-label">Iterative testing</div>
-      <div class="r-sub">Built and validated with users, market by market</div>
-    </div>
+    <div class="r-step"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with users, market by market</div></div>
   </div>
-
   <div class="pullquote" style="margin-top: 3rem;">
     <p>"The investigative work revealed that the system's failures weren't isolated bugs — they were structural. The architecture itself was incompatible with how people needed to work."</p>
   </div>
 </div>
 
-<!-- 04 SOLUTION -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">04</span>
-    <h2 class="chapter-title">Insight to solution</h2>
-  </div>
-  <div class="prose">
-    <p>Each problem area was addressed through a paired insight and solution — moving from what users actually experienced to what the redesigned system needed to provide.</p>
-  </div>
-
+  <div class="chapter"><span class="chapter-num">04</span><h2 class="chapter-title">Insight to solution</h2></div>
+  <div class="prose"><p>Each problem area was addressed through a paired insight and solution — moving from what users actually experienced to what the redesigned system needed to provide.</p></div>
   <div class="is-grid" id="is-grid">
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Users didn't lack capability — they lacked clarity on what to work on next</div>
-        <div class="is-body">Without a shared overview, effort drifted toward familiar tasks rather than business-critical ones.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Centralized task overview</div>
-        <ul class="is-bullets">
-          <li>Clear visibility of pending, in-progress, and completed work</li>
-          <li>Priority signals surfaced at the top of every queue</li>
-          <li>Reduced reliance on individual judgment for prioritization</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Users didn't lack capability — they lacked clarity on what to work on next</div><div class="is-body">Without a shared overview, effort drifted toward familiar tasks rather than business-critical ones.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Centralized task overview</div><ul class="is-bullets"><li>Clear visibility of pending, in-progress, and completed work</li><li>Priority signals surfaced at the top of every queue</li><li>Reduced reliance on individual judgment for prioritization</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Repetitive manual tasks had become normalized</div>
-        <div class="is-body">Users had adapted to the friction rather than questioning it. Content could not be reused across formats, forcing manual duplication every time.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Reusable content structures</div>
-        <ul class="is-bullets">
-          <li>Content reusable across content types and formats</li>
-          <li>Eliminated copy-paste workflows</li>
-          <li>Improved consistency and reduced errors at scale</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Repetitive manual tasks had become normalized</div><div class="is-body">Users had adapted to the friction rather than questioning it. Content could not be reused across formats, forcing manual duplication every time.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Reusable content structures</div><ul class="is-bullets"><li>Content reusable across content types and formats</li><li>Eliminated copy-paste workflows</li><li>Improved consistency and reduced errors at scale</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Context-switching was breaking concentration and decisions</div>
-        <div class="is-body">Metadata was spread across separate screens and external systems. Users left the platform to get what they needed — and often didn't return.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Unified contextual metadata</div>
-        <ul class="is-bullets">
-          <li>Relevant data surfaced within the workflow, not behind clicks</li>
-          <li>Removed the need to switch between tools mid-task</li>
-          <li>Improved decision-making speed and confidence</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Context-switching was breaking concentration and decisions</div><div class="is-body">Metadata was spread across separate screens and external systems. Users left the platform to get what they needed — and often didn't return.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Unified contextual metadata</div><ul class="is-bullets"><li>Relevant data surfaced within the workflow, not behind clicks</li><li>Removed the need to switch between tools mid-task</li><li>Improved decision-making speed and confidence</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Search relied on system logic rather than user mental models</div>
-        <div class="is-body">Requiring a product category upfront was how the database worked — not how translators thought. The mismatch meant hit-and-trial searching as standard practice.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Redesigned search and discovery</div>
-        <ul class="is-bullets">
-          <li>Reduced dependency on rigid, system-first filters</li>
-          <li>Natural language and content-based discovery</li>
-          <li>Significantly faster access to relevant content</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Search relied on system logic rather than user mental models</div><div class="is-body">Requiring a product category upfront was how the database worked — not how translators thought. The mismatch meant hit-and-trial searching as standard practice.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Redesigned search and discovery</div><ul class="is-bullets"><li>Reduced dependency on rigid, system-first filters</li><li>Natural language and content-based discovery</li><li>Significantly faster access to relevant content</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Collaboration was happening around the system, not inside it</div>
-        <div class="is-body">Legal reviews and proofreading were handled in downloaded Excel files. The system had too few workflow states to support what teams actually needed to do.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Expanded in-system workflow</div>
-        <ul class="is-bullets">
-          <li>Legal and proofreading workflows fully supported within the platform</li>
-          <li>Eliminated Excel-based workarounds</li>
-          <li>Real-time collaboration replacing offline coordination</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Collaboration was happening around the system, not inside it</div><div class="is-body">Legal reviews and proofreading were handled in downloaded Excel files. The system had too few workflow states to support what teams actually needed to do.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Expanded in-system workflow</div><ul class="is-bullets"><li>Legal and proofreading workflows fully supported within the platform</li><li>Eliminated Excel-based workarounds</li><li>Real-time collaboration replacing offline coordination</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Slow and unstable systems erode trust — and adoption</div>
-        <div class="is-body">Performance issues weren't just frustrating — they had changed user behaviour. People avoided features because they expected the system to fail.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Engineering partnership on performance</div>
-        <ul class="is-bullets">
-          <li>Worked directly with engineering to prioritize performance</li>
-          <li>Reduced system lag and crashes</li>
-          <li>Rebuilt user confidence through stability</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Slow and unstable systems erode trust — and adoption</div><div class="is-body">Performance issues weren't just frustrating — they had changed user behaviour. People avoided features because they expected the system to fail.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Engineering partnership on performance</div><ul class="is-bullets"><li>Worked directly with engineering to prioritize performance</li><li>Reduced system lag and crashes</li><li>Rebuilt user confidence through stability</li></ul></div>
     </div>
   </div>
 </div>
 
-<!-- 05 IMPACT -->
 <div class="impact-bg">
   <div class="section" style="padding-top:0;padding-bottom:0;">
-    <div class="chapter fade-in">
-      <span class="chapter-num" style="color:var(--gold)">05</span>
-      <h2 class="chapter-title">Measured impact</h2>
-    </div>
-    <div class="prose fade-in">
-      <p>The platform is now live across all IKEA markets. Impact was measured through usability testing, analytics, and SLA tracking before and after rollout.</p>
-    </div>
+    <div class="chapter fade-in"><span class="chapter-num" style="color:var(--gold)">05</span><h2 class="chapter-title">Measured impact</h2></div>
+    <div class="prose fade-in"><p>The platform is now live across all IKEA markets. Impact was measured through usability testing, analytics, and SLA tracking before and after rollout.</p></div>
     <div class="metrics-row" id="metrics-row">
-      <div class="metric">
-        <span class="metric-value">40%</span>
-        <div class="metric-label">Reduction in task completion time</div>
-        <div class="metric-context">Across core translation workflows</div>
-      </div>
-      <div class="metric">
-        <span class="metric-value">50%</span>
-        <div class="metric-label">Improvement in search effectiveness</div>
-        <div class="metric-context">Content found faster, fewer failed searches</div>
-      </div>
-      <div class="metric">
-        <span class="metric-value">60%</span>
-        <div class="metric-label">Reduction in SLA breaches</div>
-        <div class="metric-context">Across all 63 markets post-launch</div>
-      </div>
+      <div class="metric"><span class="metric-value">40%</span><div class="metric-label">Reduction in task completion time</div><div class="metric-context">Across core translation workflows</div></div>
+      <div class="metric"><span class="metric-value">50%</span><div class="metric-label">Improvement in search effectiveness</div><div class="metric-context">Content found faster, fewer failed searches</div></div>
+      <div class="metric"><span class="metric-value">60%</span><div class="metric-label">Reduction in SLA breaches</div><div class="metric-context">Across all 63 markets post-launch</div></div>
     </div>
   </div>
 </div>
 
-<!-- 06 LEARNINGS -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">06</span>
-    <h2 class="chapter-title">What I took away</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">06</span><h2 class="chapter-title">What I took away</h2></div>
   <div class="learnings-grid" id="learnings-grid">
-    <div class="learning-card">
-      <div class="learning-num">Learning 01</div>
-      <div class="learning-title">Workarounds are data</div>
-      <div class="learning-body">When users download Excel files to do legal reviews, that's not a quirk — it's a design failure made visible. The workaround is the signal. Every informal process deserves a formal question: why does this exist?</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 02</div>
-      <div class="learning-title">Buy vs build is a UX decision too</div>
-      <div class="learning-body">Recommending the right architecture — rather than assuming we'd build everything — was one of the highest-impact design decisions I made. Understanding technical options is part of the UX brief.</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 03</div>
-      <div class="learning-title">Global scale demands radical simplicity</div>
-      <div class="learning-body">With 63 markets and many languages, any ambiguity in the interface multiplied into support requests, errors, and delays. Clarity at the component level had outsized downstream impact.</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 04</div>
-      <div class="learning-title">Performance is a design requirement</div>
-      <div class="learning-body">Users had adapted their behaviour around a slow system — avoiding certain features entirely. Shipping a faster platform changed not just experience but what was possible. Speed is a feature.</div>
-    </div>
+    <div class="learning-card"><div class="learning-num">Learning 01</div><div class="learning-title">Workarounds are data</div><div class="learning-body">When users download Excel files to do legal reviews, that's not a quirk — it's a design failure made visible. The workaround is the signal. Every informal process deserves a formal question: why does this exist?</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 02</div><div class="learning-title">Buy vs build is a UX decision too</div><div class="learning-body">Recommending the right architecture — rather than assuming we'd build everything — was one of the highest-impact design decisions I made. Understanding technical options is part of the UX brief.</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 03</div><div class="learning-title">Global scale demands radical simplicity</div><div class="learning-body">With 63 markets and many languages, any ambiguity in the interface multiplied into support requests, errors, and delays. Clarity at the component level had outsized downstream impact.</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 04</div><div class="learning-title">Performance is a design requirement</div><div class="learning-body">Users had adapted their behaviour around a slow system — avoiding certain features entirely. Shipping a faster platform changed not just experience but what was possible. Speed is a feature.</div></div>
   </div>
 </div>
 
-<!-- NEXT -->
 <div class="next-cs">
   <div class="next-label">Next case study</div>
   <div class="next-title">From manual spreadsheets to intelligent communication planning</div>
   <a href="cs2-cabs.html" class="next-btn">
     Read Case Study 02
-    <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </div>
 
 <script>
+  const toggle = document.getElementById('themeToggle');
+  function syncToggle(theme){ const dark = theme === 'dark'; toggle.setAttribute('aria-pressed', String(dark)); toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme'); }
+  syncToggle(document.documentElement.getAttribute('data-theme'));
+  toggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncToggle(next);
+  });
+
   const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
@@ -645,14 +458,9 @@
     const parent = document.getElementById(parentId);
     if (!parent) return;
     new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          parent.querySelectorAll(selector).forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * delay));
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) { parent.querySelectorAll(selector).forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * delay)); } });
     }, { threshold: 0.1 }).observe(parent);
   };
-
   staggerObs('.r-step', 'research-flow', 100);
   staggerObs('.is-card', 'is-grid', 90);
   staggerObs('.learning-card', 'learnings-grid', 80);
