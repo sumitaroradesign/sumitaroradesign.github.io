@@ -1,173 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Case Study 02 — Campaign Planning Platform · Sumit Arora</title>
+<meta name="color-scheme" content="light dark">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+  (function(){
+    try{
+      var t=localStorage.getItem('theme');
+      if(t!=='light'&&t!=='dark'){ t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
+      document.documentElement.setAttribute('data-theme',t);
+    }catch(e){ document.documentElement.setAttribute('data-theme','light'); }
+  })();
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream: #F7F3ED;
-    --warm-white: #FDFAF6;
-    --sand: #E8E0D4;
-    --clay: #C4A882;
-    --terracotta: #B5714A;
-    --rust: #8C4A2F;
-    --ink: #2A1F14;
-    --muted: #7A6E64;
-    --soft: #A8998C;
-    --teal: #3D7A72;
-    --teal-light: #EAF3F1;
-    --gold: #C9932A;
-    --gold-light: #FBF3E2;
-    --plum: #5A3F6B;
-    --plum-light: #F2EEF6;
+    --bg: #F7F3ED; --surface: #FDFAF6; --border: #E8E0D4; --panel: #1A1220;
+    --nav-bg: rgba(247,243,237,0.92);
+    --text: #2A1F14; --text-2: #685E54; --text-3: #756B60; --prose: #3D3228;
+    --accent: #A05A36; --accent-strong: #8C4A2F; --clay: #C4A882;
+    --plum: #5A3F6B; --gold: #8A6310;
+    --on-panel: #FDFAF6; --on-panel-2: rgba(253,250,246,0.78); --on-panel-em: #C9A8E0;
+    --on-panel-accent: rgba(201,168,224,0.95);
+    --accent-btn-bg: #5A3F6B; --accent-btn-text: #FFFFFF; --accent-btn-hover: #3D2A4C;
+    --impact-bg: #FBF3E2; --impact-border: #E8D9B8;
+    --shadow: rgba(42,31,20,0.1);
+    --focus: #2A1F14; --focus-on-panel: #C9A8E0;
+  }
+  :root[data-theme="dark"] {
+    --bg: #14100A; --surface: #221C14; --border: #3A3127; --panel: #160E1C;
+    --nav-bg: rgba(20,16,10,0.92);
+    --text: #F2ECE2; --text-2: #C7BBAC; --text-3: #AEA293; --prose: #D8CFC2;
+    --accent: #E0986B; --accent-strong: #E0986B; --clay: #D4B98E;
+    --plum: #C9A8E0; --gold: #E0B45A;
+    --on-panel: #F7F2EA; --on-panel-2: rgba(247,242,234,0.8); --on-panel-em: #D6B9EA;
+    --on-panel-accent: rgba(201,168,224,0.95);
+    --accent-btn-bg: #C9A8E0; --accent-btn-text: #14100A; --accent-btn-hover: #D9BCE9;
+    --impact-bg: #221B10; --impact-border: #4A3A1E;
+    --shadow: rgba(0,0,0,0.4);
+    --focus: #E0986B; --focus-on-panel: #D6B9EA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14100A; --surface: #221C14; --border: #3A3127; --panel: #160E1C;
+      --nav-bg: rgba(20,16,10,0.92);
+      --text: #F2ECE2; --text-2: #C7BBAC; --text-3: #AEA293; --prose: #D8CFC2;
+      --accent: #E0986B; --accent-strong: #E0986B; --clay: #D4B98E;
+      --plum: #C9A8E0; --gold: #E0B45A;
+      --on-panel: #F7F2EA; --on-panel-2: rgba(247,242,234,0.8); --on-panel-em: #D6B9EA;
+      --on-panel-accent: rgba(201,168,224,0.95);
+      --accent-btn-bg: #C9A8E0; --accent-btn-text: #14100A; --accent-btn-hover: #D9BCE9;
+      --impact-bg: #221B10; --impact-border: #4A3A1E;
+      --shadow: rgba(0,0,0,0.4);
+      --focus: #E0986B; --focus-on-panel: #D6B9EA;
+    }
   }
 
   html { scroll-behavior: smooth; }
-  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; font-size: 17px; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  .hero a:focus-visible, .problems-bg a:focus-visible, .footer-nav a:focus-visible, .theme-toggle:focus-visible { outline-color: var(--focus-on-panel); }
 
   /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(247,243,237,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--sand);
-    padding: 0 4rem; height: 56px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--ink); text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--terracotta); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 4rem; height: 56px; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s, border-color 0.3s; }
+  .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--text); text-decoration: none; padding: 0.4rem 0; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--text-2); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; padding: 0.5rem 0; }
+  .nav-links a:hover { color: var(--accent); }
+  .theme-toggle { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s; }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle .icon-moon { display: inline-flex; } .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; } :root[data-theme="dark"] .theme-toggle .icon-sun { display: inline-flex; }
 
-  /* HERO — different accent: plum for this case study */
-  .hero {
-    min-height: 100vh; padding-top: 56px;
-    display: grid; grid-template-columns: 1.1fr 0.9fr;
-    position: relative; overflow: hidden;
-  }
-  .hero-left {
-    background: #1A1220;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 6rem 4rem 5rem 5rem; position: relative;
-  }
-  .hero-left::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 30% 75%, rgba(90,63,107,0.4) 0%, transparent 60%);
-  }
+  /* HERO */
+  .hero { min-height: 100vh; padding-top: 56px; display: grid; grid-template-columns: 1.1fr 0.9fr; position: relative; overflow: hidden; }
+  .hero-left { background: var(--panel); display: flex; flex-direction: column; justify-content: flex-end; padding: 6rem 4rem 5rem 5rem; position: relative; transition: background 0.3s; }
+  .hero-left::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 75%, rgba(90,63,107,0.4) 0%, transparent 60%); }
   .hero-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--clay); margin-bottom: 2rem; position: relative; }
-  .hero-title { font-family: 'Lora', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 500; line-height: 1.18; color: var(--warm-white); position: relative; margin-bottom: 1.5rem; }
-  .hero-title em { font-style: italic; color: #C9A8E0; }
-  .hero-subtitle { font-size: 15px; color: rgba(253,250,246,0.5); max-width: 40ch; position: relative; line-height: 1.8; }
-  .hero-right { background: var(--warm-white); display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 4.5rem; }
+  .hero-title { font-family: 'Lora', serif; font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 500; line-height: 1.18; color: var(--on-panel); position: relative; margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--on-panel-em); }
+  .hero-subtitle { font-size: 15px; color: var(--on-panel-2); max-width: 40ch; position: relative; line-height: 1.8; }
+  .hero-right { background: var(--surface); display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem 5rem 4.5rem; transition: background 0.3s; }
 
-  /* OUTCOME PILLS */
   .outcome-pills { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem; }
-  .pill { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: 10px; background: var(--cream); border: 1px solid var(--sand); }
+  .pill { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); }
   .pill-val { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 600; color: var(--plum); min-width: 70px; }
-  .pill-text { font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .pill-text { font-size: 13px; color: var(--text-2); line-height: 1.4; }
 
-  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; border-top: 1px solid var(--sand); padding-top: 2rem; }
-  .meta-item label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.35rem; }
-  .meta-item span { font-family: 'Lora', serif; font-size: 14px; color: var(--ink); line-height: 1.4; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+  .meta-item label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.35rem; }
+  .meta-item span { font-family: 'Lora', serif; font-size: 14px; color: var(--text); line-height: 1.4; }
 
-  .scroll-cue { position: absolute; bottom: 2.5rem; right: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); animation: float 2.5s ease-in-out infinite; }
+  .scroll-cue { position: absolute; bottom: 2.5rem; right: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-panel-2); animation: float 2.5s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
   /* LAYOUT */
   .section { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; }
   .section-narrow { max-width: 740px; margin: 0 auto; padding: 6rem 4rem; }
-  .divider { border: none; border-top: 1px solid var(--sand); }
+  .divider { border: none; border-top: 1px solid var(--border); }
 
   /* CHAPTER */
   .chapter { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
-  .chapter-num { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); flex-shrink: 0; }
-  .chapter-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; line-height: 1.25; color: var(--ink); }
+  .chapter-num { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
+  .chapter-title { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 500; line-height: 1.25; color: var(--text); }
 
   /* PROSE */
-  .prose p { margin-bottom: 1.4rem; color: #3D3228; max-width: 68ch; line-height: 1.85; }
+  .prose p { margin-bottom: 1.4rem; color: var(--prose); max-width: 68ch; line-height: 1.85; }
   .prose p:last-child { margin-bottom: 0; }
   .pullquote { border-left: 3px solid var(--plum); margin: 2.5rem 0; padding: 0.5rem 0 0.5rem 2rem; }
-  .pullquote p { font-family: 'Lora', serif; font-size: 1.15rem; font-style: italic; color: var(--ink); line-height: 1.65; max-width: 54ch; }
+  .pullquote p { font-family: 'Lora', serif; font-size: 1.15rem; font-style: italic; color: var(--text); line-height: 1.65; max-width: 54ch; }
 
-  /* PRODUCT CONTEXT */
+  /* CONTEXT */
   .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .context-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 10px; padding: 1.5rem 1.75rem; }
-  .context-card h4 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.75rem; }
+  .context-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.75rem; }
+  .context-card h4 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
   .context-list { list-style: none; }
-  .context-list li { font-size: 14px; color: var(--muted); padding: 0.35rem 0; border-bottom: 1px solid var(--sand); line-height: 1.5; display: flex; gap: 0.6rem; }
+  .context-list li { font-size: 14px; color: var(--text-2); padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.5; display: flex; gap: 0.6rem; }
   .context-list li:last-child { border-bottom: none; }
   .context-list li::before { content: '—'; color: var(--clay); flex-shrink: 0; }
 
-  /* PROBLEM SECTION */
-  .problems-bg { background: #1A1220; padding: 6rem 0; }
+  /* PROBLEMS */
+  .problems-bg { background: var(--panel); padding: 6rem 0; transition: background 0.3s; }
   .problems-inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
   .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; overflow: hidden; margin-top: 2.5rem; }
   .problem-card { background: rgba(255,255,255,0.04); padding: 2rem; transition: background 0.25s; }
   .problem-card:hover { background: rgba(255,255,255,0.07); }
-  .problem-num { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(201,163,224,0.5); margin-bottom: 0.75rem; }
-  .problem-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--warm-white); margin-bottom: 0.6rem; line-height: 1.35; }
-  .problem-body { font-size: 13px; color: rgba(253,250,246,0.4); line-height: 1.7; }
+  .problem-num { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-panel-accent); margin-bottom: 0.75rem; }
+  .problem-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--on-panel); margin-bottom: 0.6rem; line-height: 1.35; }
+  .problem-body { font-size: 13px; color: var(--on-panel-2); line-height: 1.7; }
+  .problems-intro { font-size: 15px; color: var(--on-panel-2); max-width: 62ch; line-height: 1.8; margin-bottom: 0; }
 
   /* RESEARCH TIMELINE */
-  .research-timeline { position: relative; margin-top: 3rem; padding-left: 2rem; border-left: 1.5px solid var(--sand); }
+  .research-timeline { position: relative; margin-top: 3rem; padding-left: 2rem; border-left: 1.5px solid var(--border); }
   .rt-item { position: relative; padding: 0 0 2.5rem 2rem; opacity: 0; transform: translateX(-12px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .rt-item.visible { opacity: 1; transform: translateX(0); }
   .rt-item:last-child { padding-bottom: 0; }
-  .rt-dot { position: absolute; left: -2.6rem; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--plum); border: 2px solid var(--cream); }
+  .rt-dot { position: absolute; left: -2.6rem; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--plum); border: 2px solid var(--bg); }
   .rt-label { font-size: 11px; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; color: var(--plum); margin-bottom: 0.35rem; }
-  .rt-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
-  .rt-body { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 56ch; }
+  .rt-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; }
+  .rt-body { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 56ch; }
 
   /* INSIGHT → SOLUTION */
   .is-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2.5rem; }
-  .is-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--sand); border-radius: 12px; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .is-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .is-card.visible { opacity: 1; transform: translateY(0); }
-  .is-insight { background: var(--warm-white); padding: 1.75rem 2rem; border-right: 1px solid var(--sand); }
-  .is-solution { background: var(--cream); padding: 1.75rem 2rem; }
+  .is-insight { background: var(--surface); padding: 1.75rem 2rem; border-right: 1px solid var(--border); }
+  .is-solution { background: var(--bg); padding: 1.75rem 2rem; }
   .is-label { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .is-insight .is-label { color: var(--soft); }
+  .is-insight .is-label { color: var(--text-3); }
   .is-solution .is-label { color: var(--plum); }
-  .is-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; line-height: 1.35; margin-bottom: 0.5rem; color: var(--ink); }
-  .is-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .is-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; line-height: 1.35; margin-bottom: 0.5rem; color: var(--text); }
+  .is-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
   .is-bullets { list-style: none; margin-top: 0.5rem; }
-  .is-bullets li { font-size: 13px; color: var(--muted); padding: 0.2rem 0; display: flex; gap: 0.5rem; line-height: 1.5; }
+  .is-bullets li { font-size: 13px; color: var(--text-2); padding: 0.2rem 0; display: flex; gap: 0.5rem; line-height: 1.5; }
   .is-bullets li::before { content: '→'; color: var(--plum); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
 
   /* IMPACT */
-  .impact-bg { background: var(--gold-light); border-top: 1px solid #E8D9B8; border-bottom: 1px solid #E8D9B8; padding: 6rem 0; }
+  .impact-bg { background: var(--impact-bg); border-top: 1px solid var(--impact-border); border-bottom: 1px solid var(--impact-border); padding: 6rem 0; transition: background 0.3s; }
   .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 860px; margin: 2.5rem auto 0; }
-  .metric { text-align: center; padding: 2rem; border-right: 1px solid #E8D9B8; opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .metric { text-align: center; padding: 2rem; border-right: 1px solid var(--impact-border); opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .metric:last-child { border-right: none; }
   .metric.visible { opacity: 1; transform: translateY(0); }
-  .metric-value { font-family: 'Lora', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--rust); line-height: 1; margin-bottom: 0.5rem; display: block; }
-  .metric-label { font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 20ch; margin: 0 auto; }
-  .metric-context { font-size: 11px; color: var(--soft); margin-top: 0.35rem; }
+  .metric-value { font-family: 'Lora', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--accent-strong); line-height: 1; margin-bottom: 0.5rem; display: block; }
+  .metric-label { font-size: 13px; color: var(--text-2); line-height: 1.5; max-width: 20ch; margin: 0 auto; }
+  .metric-context { font-size: 11px; color: var(--text-3); margin-top: 0.35rem; }
 
   /* LEARNINGS */
   .learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-  .learning-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 10px; padding: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .learning-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.75rem; opacity: 0; transform: translateY(12px); transition: opacity 0.45s ease, transform 0.45s ease; }
   .learning-card.visible { opacity: 1; transform: translateY(0); }
-  .learning-num { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.5rem; }
-  .learning-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.35; }
-  .learning-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .learning-num { font-size: 10px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
+  .learning-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; line-height: 1.35; }
+  .learning-body { font-size: 13px; color: var(--text-2); line-height: 1.65; }
 
-  /* BACK / FOOTER */
-  .footer-nav { background: #1A1220; padding: 5rem 4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-  .footer-label { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--soft); }
+  /* FOOTER */
+  .footer-nav { background: var(--panel); padding: 5rem 4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; transition: background 0.3s; }
+  .footer-label { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--on-panel-2); }
   .footer-name { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--clay); font-style: italic; }
-  .back-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.85rem 2rem; border-radius: 40px; background: var(--plum); color: white; font-size: 14px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
-  .back-btn:hover { background: #3D2A4C; transform: translateY(-1px); }
+  .back-btn { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.85rem 2rem; border-radius: 40px; background: var(--accent-btn-bg); color: var(--accent-btn-text); font-size: 14px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .back-btn:hover { background: var(--accent-btn-hover); transform: translateY(-1px); }
 
   /* FADE IN */
   .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .fade-in, .rt-item, .is-card, .metric, .learning-card { opacity: 1 !important; transform: none !important; }
+  }
 
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
@@ -179,50 +209,39 @@
     .problem-grid { grid-template-columns: 1fr; }
     .context-grid { grid-template-columns: 1fr; }
     .is-card { grid-template-columns: 1fr; }
-    .is-insight { border-right: none; border-bottom: 1px solid var(--sand); }
+    .is-insight { border-right: none; border-bottom: 1px solid var(--border); }
     .metrics-row { grid-template-columns: 1fr; }
-    .metric { border-right: none; border-bottom: 1px solid #E8D9B8; }
+    .metric { border-right: none; border-bottom: 1px solid var(--impact-border); }
     .metric:last-child { border-bottom: none; }
     .learnings-grid { grid-template-columns: 1fr; }
     .footer-nav { padding: 4rem 1.5rem; }
   }
-
-  /* Phones — fix nav crowding, scroll cue overlap, timeline dot, pullquote */
   @media (max-width: 600px) {
     nav { padding: 0 1.25rem; }
     .nav-name { font-size: 14px; }
     .nav-links { gap: 1.25rem; }
-    .nav-links a { font-size: 12px; }
-
+    .nav-links a:not(.theme-toggle) { font-size: 12px; }
     .hero-left { padding: 4.5rem 1.5rem 3rem; }
     .scroll-cue { position: static; margin-top: 2rem; right: auto; bottom: auto; }
-
     .hero-right { padding: 2.5rem 1.5rem; }
     .meta-grid { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 1.5rem; }
     .pill { padding: 0.85rem 1rem; gap: 0.85rem; }
     .pill-val { font-size: 1.4rem; min-width: 60px; }
     .pill-text { font-size: 12px; }
-
     .section, .section-narrow { padding: 3.5rem 1.25rem; }
     .problems-inner { padding: 0 1.25rem; }
     .problems-bg { padding: 4rem 0; }
     .impact-bg { padding: 4rem 0; }
-
     .chapter { flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
-
     .pullquote { margin: 2rem 0; padding-left: 1.25rem; }
     .pullquote p { font-size: 1.05rem; }
-
     .prose p { font-size: 15px; line-height: 1.8; }
     .problem-card { padding: 1.5rem 1.25rem; }
     .context-card, .learning-card { padding: 1.25rem 1.25rem; }
     .is-insight, .is-solution { padding: 1.5rem 1.25rem; }
-
-    /* Research timeline: shorten the indent so the dot doesn't sit outside the column */
     .research-timeline { padding-left: 1.25rem; margin-left: 0.25rem; }
     .rt-item { padding: 0 0 2rem 1.25rem; }
     .rt-dot { left: -1.85rem; }
-
     .footer-nav { padding: 3.5rem 1.5rem; }
   }
 </style>
@@ -235,10 +254,13 @@
     <a href="index.html#work">Work</a>
     <a href="index.html#about">About</a>
     <a href="index.html#contact">Contact</a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark theme" aria-pressed="false">
+      <span class="icon-moon" aria-hidden="true"><svg width="16" height="16" fill="none" viewBox="0 0 17 17"><path d="M14 9.5A5.5 5.5 0 017.5 3a5.5 5.5 0 100 11c2.5 0 4.6-1.7 5.2-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
+      <span class="icon-sun" aria-hidden="true"><svg width="16" height="16" fill="none" viewBox="0 0 17 17"><circle cx="8.5" cy="8.5" r="3.2" stroke="currentColor" stroke-width="1.3"/><path d="M8.5 1v1.6M8.5 14.4V16M1 8.5h1.6M14.4 8.5H16M3.2 3.2l1.1 1.1M12.7 12.7l1.1 1.1M3.2 13.8l1.1-1.1M12.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+    </button>
   </div>
 </nav>
 
-<!-- HERO -->
 <header class="hero">
   <div class="hero-left">
     <div class="hero-tag">Case Study 02 &nbsp;·&nbsp; Enterprise UX &nbsp;·&nbsp; Planning Platform</div>
@@ -247,57 +269,31 @@
   </div>
   <div class="hero-right">
     <div class="outcome-pills">
-      <div class="pill">
-        <div class="pill-val">~80%</div>
-        <div class="pill-text">Reduction in manual validation effort across catalogue planning workflows</div>
-      </div>
-      <div class="pill">
-        <div class="pill-val">800 hrs</div>
-        <div class="pill-text">Saved in campaign planning effort across business areas</div>
-      </div>
-      <div class="pill">
-        <div class="pill-val">15→3</div>
-        <div class="pill-text">Days to prepare product lists for supply and classification — for 30 users</div>
-      </div>
+      <div class="pill"><div class="pill-val">~80%</div><div class="pill-text">Reduction in manual validation effort across catalogue planning workflows</div></div>
+      <div class="pill"><div class="pill-val">800 hrs</div><div class="pill-text">Saved in campaign planning effort across business areas</div></div>
+      <div class="pill"><div class="pill-val">15→3</div><div class="pill-text">Days to prepare product lists for supply and classification — for 30 users</div></div>
     </div>
     <div class="meta-grid">
-      <div class="meta-item">
-        <label>My role</label>
-        <span>Lead UX Designer &amp; Product Strategist</span>
-      </div>
-      <div class="meta-item">
-        <label>Scope</label>
-        <span>Research, workflow design, system design</span>
-      </div>
-      <div class="meta-item">
-        <label>Users</label>
-        <span>~30 communication planners, all markets</span>
-      </div>
-      <div class="meta-item">
-        <label>Domain</label>
-        <span>Campaign planning, content briefing, supply alignment</span>
-      </div>
+      <div class="meta-item"><label>My role</label><span>Lead UX Designer &amp; Product Strategist</span></div>
+      <div class="meta-item"><label>Scope</label><span>Research, workflow design, system design</span></div>
+      <div class="meta-item"><label>Users</label><span>~30 communication planners, all markets</span></div>
+      <div class="meta-item"><label>Domain</label><span>Campaign planning, content briefing, supply alignment</span></div>
     </div>
   </div>
   <div class="scroll-cue">
-    <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Read the story
   </div>
 </header>
 
-<!-- NDA NOTICE -->
-<div style="background:#F7F3ED; border-bottom: 1px solid #E8E0D4; padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem;">
-  <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="#A8998C" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="#A8998C" stroke-width="1.2" stroke-linecap="round"/></svg>
-  <span style="font-size:13px; color:#A8998C; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
+<div style="background:var(--bg); border-bottom: 1px solid var(--border); padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem; color:var(--text-2);">
+  <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+  <span style="font-size:13px; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
 </div>
 
-<!-- 01 PRODUCT CONTEXT -->
 <hr class="divider">
 <div class="section-narrow fade-in">
-  <div class="chapter">
-    <span class="chapter-num">01</span>
-    <h2 class="chapter-title">What this product is, and why it matters</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">01</span><h2 class="chapter-title">What this product is, and why it matters</h2></div>
   <div class="prose">
     <p>This is an enterprise platform used across IKEA to plan and brief large-scale communication projects — catalogues, brochures, and web-based campaigns. It sits at the centre of a complex planning process that spans content selection, market alignment, supply chain coordination, and execution briefing.</p>
     <p>Planning communication at this scale requires answering complex questions simultaneously: which products are available across which markets, for how long, during which campaign windows, and at what level of supply chain readiness? Before this platform existed, every one of those questions was answered manually.</p>
@@ -324,271 +320,118 @@
   </div>
 </div>
 
-<!-- MY ROLE -->
 <hr class="divider">
 <div class="section-narrow fade-in">
-  <div class="chapter">
-    <span class="chapter-num">My role</span>
-    <h2 class="chapter-title">Understanding a process, then redesigning it</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">My role</span><h2 class="chapter-title">Understanding a process, then redesigning it</h2></div>
   <div class="prose">
     <p>I led the UX and product strategy for this platform — from early research into how communication planning actually happened, through workflow redesign, system design, and iterative delivery with stakeholders across business areas, product, and technology.</p>
     <p>The starting point wasn't a brief for a new tool. It was a recognition that the existing process — heavily manual, disconnected, and siloed by business area — was no longer sustainable at the scale IKEA needed to operate.</p>
   </div>
 </div>
 
-<!-- 02 PROBLEM -->
 <div class="problems-bg">
   <div class="problems-inner">
-    <div class="chapter">
-      <span class="chapter-num">02</span>
-      <h2 class="chapter-title" style="color:var(--warm-white)">A process built on manual effort and individual expertise</h2>
-    </div>
-    <p style="font-size:15px; color:rgba(253,250,246,0.5); max-width:62ch; line-height:1.8; margin-bottom:0;">Each home furnishing business area worked in its own silo — in spreadsheets and PowerPoints — with no collaborative way to plan, no shared data, and no system to enforce business rules or validate decisions.</p>
+    <div class="chapter"><span class="chapter-num">02</span><h2 class="chapter-title" style="color:var(--on-panel)">A process built on manual effort and individual expertise</h2></div>
+    <p class="problems-intro">Each home furnishing business area worked in its own silo — in spreadsheets and PowerPoints — with no collaborative way to plan, no shared data, and no system to enforce business rules or validate decisions.</p>
     <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-num">Problem 01</div>
-        <div class="problem-title">No way to know which products were right</div>
-        <div class="problem-body">Users had to run multiple reports, pull them into a common file, and manually work out which products were available in which markets, across which campaign windows. There was no system to surface this — only effort.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 02</div>
-        <div class="problem-title">Business areas working in silos</div>
-        <div class="problem-body">Each team worked independently in their own files. There was no shared workspace, no visibility into what other areas were doing, and coordination happened through meetings and email — not through the system.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 03</div>
-        <div class="problem-title">Supply alignment took weeks, not days</div>
-        <div class="problem-body">Preparing product lists for classification and supply alignment — ensuring high availability across all systems — took up to 15 days for around 30 users. This was a structural bottleneck, not an edge case.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 04</div>
-        <div class="problem-title">Validating decisions, not making them</div>
-        <div class="problem-body">The majority of planning time was spent checking whether a decision was valid — not on the decision itself. Users were human validation engines, running business rules that a system should have been enforcing.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 05</div>
-        <div class="problem-title">No brief creation process</div>
-        <div class="problem-body">Once products were selected and pages planned, there was no structured way to communicate decisions downstream. Briefs were assembled manually and lacked the consistency the value chain needed to act on them.</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">Problem 06</div>
-        <div class="problem-title">Market variation handled ad hoc</div>
-        <div class="problem-body">Different markets sell different products. Preparing additional pages for markets not selling a featured product, and managing those layout differences, was entirely manual — and easily missed.</div>
-      </div>
+      <div class="problem-card"><div class="problem-num">Problem 01</div><div class="problem-title">No way to know which products were right</div><div class="problem-body">Users had to run multiple reports, pull them into a common file, and manually work out which products were available in which markets, across which campaign windows. There was no system to surface this — only effort.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 02</div><div class="problem-title">Business areas working in silos</div><div class="problem-body">Each team worked independently in their own files. There was no shared workspace, no visibility into what other areas were doing, and coordination happened through meetings and email — not through the system.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 03</div><div class="problem-title">Supply alignment took weeks, not days</div><div class="problem-body">Preparing product lists for classification and supply alignment — ensuring high availability across all systems — took up to 15 days for around 30 users. This was a structural bottleneck, not an edge case.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 04</div><div class="problem-title">Validating decisions, not making them</div><div class="problem-body">The majority of planning time was spent checking whether a decision was valid — not on the decision itself. Users were human validation engines, running business rules that a system should have been enforcing.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 05</div><div class="problem-title">No brief creation process</div><div class="problem-body">Once products were selected and pages planned, there was no structured way to communicate decisions downstream. Briefs were assembled manually and lacked the consistency the value chain needed to act on them.</div></div>
+      <div class="problem-card"><div class="problem-num">Problem 06</div><div class="problem-title">Market variation handled ad hoc</div><div class="problem-body">Different markets sell different products. Preparing additional pages for markets not selling a featured product, and managing those layout differences, was entirely manual — and easily missed.</div></div>
     </div>
   </div>
 </div>
 
-<!-- 03 RESEARCH -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">03</span>
-    <h2 class="chapter-title">Research &amp; insights</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">03</span><h2 class="chapter-title">Research &amp; insights</h2></div>
   <div class="prose">
     <p>To understand the problem deeply, I focused on how communication planning was actually carried out at the business area level — not the ideal process, but the real one. I worked closely with stakeholders to map the end-to-end workflow, identifying key milestones and measuring how long different tasks actually took.</p>
   </div>
-
   <div class="pullquote">
     <p>"Users were spending more time validating decisions than making them. The problem wasn't capability — it was the absence of a system that could support decision-making."</p>
   </div>
-
   <div class="research-timeline" id="research-timeline">
-    <div class="rt-item">
-      <div class="rt-dot"></div>
-      <div class="rt-label">Step 01 — Workflow mapping</div>
-      <div class="rt-title">Understanding planning at the business area level</div>
-      <div class="rt-body">I worked directly with planners to trace the end-to-end workflow — from first product consideration through to brief submission. This revealed where time was being spent and where decisions were being made versus validated.</div>
-    </div>
-    <div class="rt-item">
-      <div class="rt-dot"></div>
-      <div class="rt-label">Step 02 — Time analysis</div>
-      <div class="rt-title">Quantifying the manual effort</div>
-      <div class="rt-body">By measuring how long key tasks took — particularly product validation and supply list preparation — it became clear that the volume of manual work was not just inefficient, it was structurally incompatible with the pace of campaign planning.</div>
-    </div>
-    <div class="rt-item">
-      <div class="rt-dot"></div>
-      <div class="rt-label">Step 03 — Pain synthesis</div>
-      <div class="rt-title">Identifying the disconnects</div>
-      <div class="rt-body">I identified the major points where system support was missing — where adding a feature or enforcing a business rule in the system would eliminate a manual step entirely. These became the core design opportunities.</div>
-    </div>
-    <div class="rt-item">
-      <div class="rt-dot"></div>
-      <div class="rt-label">Step 04 — Stakeholder alignment</div>
-      <div class="rt-title">Building shared understanding across teams</div>
-      <div class="rt-body">Because planning touched so many teams — business areas, supply chain, technology, product — establishing a shared understanding of the problem was as important as the design work itself. Research became a communication tool.</div>
-    </div>
+    <div class="rt-item"><div class="rt-dot"></div><div class="rt-label">Step 01 — Workflow mapping</div><div class="rt-title">Understanding planning at the business area level</div><div class="rt-body">I worked directly with planners to trace the end-to-end workflow — from first product consideration through to brief submission. This revealed where time was being spent and where decisions were being made versus validated.</div></div>
+    <div class="rt-item"><div class="rt-dot"></div><div class="rt-label">Step 02 — Time analysis</div><div class="rt-title">Quantifying the manual effort</div><div class="rt-body">By measuring how long key tasks took — particularly product validation and supply list preparation — it became clear that the volume of manual work was not just inefficient, it was structurally incompatible with the pace of campaign planning.</div></div>
+    <div class="rt-item"><div class="rt-dot"></div><div class="rt-label">Step 03 — Pain synthesis</div><div class="rt-title">Identifying the disconnects</div><div class="rt-body">I identified the major points where system support was missing — where adding a feature or enforcing a business rule in the system would eliminate a manual step entirely. These became the core design opportunities.</div></div>
+    <div class="rt-item"><div class="rt-dot"></div><div class="rt-label">Step 04 — Stakeholder alignment</div><div class="rt-title">Building shared understanding across teams</div><div class="rt-body">Because planning touched so many teams — business areas, supply chain, technology, product — establishing a shared understanding of the problem was as important as the design work itself. Research became a communication tool.</div></div>
   </div>
 </div>
 
-<!-- 04 SOLUTION -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">04</span>
-    <h2 class="chapter-title">Insight to solution</h2>
-  </div>
-  <div class="prose">
-    <p>The solutions were shaped directly by the research — each addressing a specific disconnect between what the process required and what the system provided.</p>
-  </div>
-
+  <div class="chapter"><span class="chapter-num">04</span><h2 class="chapter-title">Insight to solution</h2></div>
+  <div class="prose"><p>The solutions were shaped directly by the research — each addressing a specific disconnect between what the process required and what the system provided.</p></div>
   <div class="is-grid" id="is-grid">
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Running reports manually to find the right products was unsustainable</div>
-        <div class="is-body">Users spent the majority of planning time verifying eligibility — not choosing products. The system knew the rules; it just wasn't applying them.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — System-driven product validation</div>
-        <ul class="is-bullets">
-          <li>Business rules encoded into the platform, not held in people's heads</li>
-          <li>Products surfaced based on availability, market fit, and campaign timing</li>
-          <li>Eliminated the need to run and reconcile multiple reports</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Running reports manually to find the right products was unsustainable</div><div class="is-body">Users spent the majority of planning time verifying eligibility — not choosing products. The system knew the rules; it just wasn't applying them.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — System-driven product validation</div><ul class="is-bullets"><li>Business rules encoded into the platform, not held in people's heads</li><li>Products surfaced based on availability, market fit, and campaign timing</li><li>Eliminated the need to run and reconcile multiple reports</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Supply alignment was taking 15 days because it was entirely manual</div>
-        <div class="is-body">Preparing product lists for classification and supply readiness was a 15-day process for ~30 users. It was structured work being done in an unstructured way.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Streamlined supply preparation workflow</div>
-        <ul class="is-bullets">
-          <li>Systematized the list preparation steps into a guided workflow</li>
-          <li>Reduced 15-day process to approximately 3 days</li>
-          <li>Consistent output format, ready for downstream systems</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Supply alignment was taking 15 days because it was entirely manual</div><div class="is-body">Preparing product lists for classification and supply readiness was a 15-day process for ~30 users. It was structured work being done in an unstructured way.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Streamlined supply preparation workflow</div><ul class="is-bullets"><li>Systematized the list preparation steps into a guided workflow</li><li>Reduced 15-day process to approximately 3 days</li><li>Consistent output format, ready for downstream systems</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Teams were collaborating around the system, not inside it</div>
-        <div class="is-body">Without a shared workspace, each business area worked in isolation. Alignment happened through meetings and file-sharing — slow, fragile, and easy to lose.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Shared planning workspace</div>
-        <ul class="is-bullets">
-          <li>Single environment for all business areas to plan together</li>
-          <li>Live visibility into what other teams are working on</li>
-          <li>Replaced parallel spreadsheets with a common source of truth</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Teams were collaborating around the system, not inside it</div><div class="is-body">Without a shared workspace, each business area worked in isolation. Alignment happened through meetings and file-sharing — slow, fragile, and easy to lose.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Shared planning workspace</div><ul class="is-bullets"><li>Single environment for all business areas to plan together</li><li>Live visibility into what other teams are working on</li><li>Replaced parallel spreadsheets with a common source of truth</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Market differences were handled reactively, not by design</div>
-        <div class="is-body">Not every market sells the same products. Managing layout variations for markets not featuring a product was a manual afterthought — and often missed.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Market-aware layout planning</div>
-        <ul class="is-bullets">
-          <li>System flags market-specific variations at the planning stage</li>
-          <li>Alternative layouts defined within the same workflow</li>
-          <li>Reduced errors and last-minute corrections downstream</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Market differences were handled reactively, not by design</div><div class="is-body">Not every market sells the same products. Managing layout variations for markets not featuring a product was a manual afterthought — and often missed.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Market-aware layout planning</div><ul class="is-bullets"><li>System flags market-specific variations at the planning stage</li><li>Alternative layouts defined within the same workflow</li><li>Reduced errors and last-minute corrections downstream</li></ul></div>
     </div>
-
     <div class="is-card">
-      <div class="is-insight">
-        <div class="is-label">Insight</div>
-        <div class="is-title">Briefs were assembled manually from planning output</div>
-        <div class="is-body">Once decisions were made, communicating them downstream required another round of manual work — assembling briefs that the value chain then had to interpret and act on.</div>
-      </div>
-      <div class="is-solution">
-        <div class="is-label">Solution — Structured brief generation</div>
-        <ul class="is-bullets">
-          <li>Briefs generated directly from planning decisions</li>
-          <li>Consistent, structured format for downstream execution</li>
-          <li>Eliminated the gap between planning and communication</li>
-        </ul>
-      </div>
+      <div class="is-insight"><div class="is-label">Insight</div><div class="is-title">Briefs were assembled manually from planning output</div><div class="is-body">Once decisions were made, communicating them downstream required another round of manual work — assembling briefs that the value chain then had to interpret and act on.</div></div>
+      <div class="is-solution"><div class="is-label">Solution — Structured brief generation</div><ul class="is-bullets"><li>Briefs generated directly from planning decisions</li><li>Consistent, structured format for downstream execution</li><li>Eliminated the gap between planning and communication</li></ul></div>
     </div>
   </div>
 </div>
 
-<!-- 05 IMPACT -->
 <div class="impact-bg">
   <div class="section" style="padding-top:0;padding-bottom:0;">
-    <div class="chapter fade-in">
-      <span class="chapter-num" style="color:var(--gold)">05</span>
-      <h2 class="chapter-title">Measured impact</h2>
-    </div>
-    <div class="prose fade-in">
-      <p>Impact was measured through workflow analysis, time tracking, and direct observation before and after rollout. Even small improvements in reducing manual steps had significant cumulative effect across 30 users and multiple planning cycles per year.</p>
-    </div>
+    <div class="chapter fade-in"><span class="chapter-num" style="color:var(--gold)">05</span><h2 class="chapter-title">Measured impact</h2></div>
+    <div class="prose fade-in"><p>Impact was measured through workflow analysis, time tracking, and direct observation before and after rollout. Even small improvements in reducing manual steps had significant cumulative effect across 30 users and multiple planning cycles per year.</p></div>
     <div class="metrics-row" id="metrics-row">
-      <div class="metric">
-        <span class="metric-value">~80%</span>
-        <div class="metric-label">Reduction in manual validation effort</div>
-        <div class="metric-context">Across catalogue planning workflows</div>
-      </div>
-      <div class="metric">
-        <span class="metric-value">800 hrs</span>
-        <div class="metric-label">Saved in campaign planning effort</div>
-        <div class="metric-context">Across all business areas</div>
-      </div>
-      <div class="metric">
-        <span class="metric-value">15→3</span>
-        <div class="metric-label">Days for supply list preparation</div>
-        <div class="metric-context">For ~30 users, per planning cycle</div>
-      </div>
+      <div class="metric"><span class="metric-value">~80%</span><div class="metric-label">Reduction in manual validation effort</div><div class="metric-context">Across catalogue planning workflows</div></div>
+      <div class="metric"><span class="metric-value">800 hrs</span><div class="metric-label">Saved in campaign planning effort</div><div class="metric-context">Across all business areas</div></div>
+      <div class="metric"><span class="metric-value">15→3</span><div class="metric-label">Days for supply list preparation</div><div class="metric-context">For ~30 users, per planning cycle</div></div>
     </div>
   </div>
 </div>
 
-<!-- 06 LEARNINGS -->
 <hr class="divider">
 <div class="section fade-in">
-  <div class="chapter">
-    <span class="chapter-num">06</span>
-    <h2 class="chapter-title">What I took away</h2>
-  </div>
+  <div class="chapter"><span class="chapter-num">06</span><h2 class="chapter-title">What I took away</h2></div>
   <div class="learnings-grid" id="learnings-grid">
-    <div class="learning-card">
-      <div class="learning-num">Learning 01</div>
-      <div class="learning-title">Business rules belong in the system, not in people</div>
-      <div class="learning-body">When users spend their time enforcing rules that could be automated, the design problem isn't usability — it's misplaced responsibility. Encoding logic into the system freed people to focus on actual decisions.</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 02</div>
-      <div class="learning-title">Collaboration needs a place to happen</div>
-      <div class="learning-body">Teams weren't failing to collaborate because they didn't want to. They were collaborating in email and meetings because the system gave them no alternative. A shared workspace changed the nature of how teams worked together.</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 03</div>
-      <div class="learning-title">Small time savings at scale are large</div>
-      <div class="learning-body">Saving 30 minutes per user per planning cycle sounds modest. Across 30 users, multiple cycles per year, and years of operation, it compounds into something material. Research into time-on-task is worth the investment.</div>
-    </div>
-    <div class="learning-card">
-      <div class="learning-num">Learning 04</div>
-      <div class="learning-title">The planner needs guidance, not just data</div>
-      <div class="learning-body">Users didn't lack access to information — they lacked the system support to act on it confidently. The design shift from surfacing raw data to guiding decisions was the most impactful single change in the platform.</div>
-    </div>
+    <div class="learning-card"><div class="learning-num">Learning 01</div><div class="learning-title">Business rules belong in the system, not in people</div><div class="learning-body">When users spend their time enforcing rules that could be automated, the design problem isn't usability — it's misplaced responsibility. Encoding logic into the system freed people to focus on actual decisions.</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 02</div><div class="learning-title">Collaboration needs a place to happen</div><div class="learning-body">Teams weren't failing to collaborate because they didn't want to. They were collaborating in email and meetings because the system gave them no alternative. A shared workspace changed the nature of how teams worked together.</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 03</div><div class="learning-title">Small time savings at scale are large</div><div class="learning-body">Saving 30 minutes per user per planning cycle sounds modest. Across 30 users, multiple cycles per year, and years of operation, it compounds into something material. Research into time-on-task is worth the investment.</div></div>
+    <div class="learning-card"><div class="learning-num">Learning 04</div><div class="learning-title">The planner needs guidance, not just data</div><div class="learning-body">Users didn't lack access to information — they lacked the system support to act on it confidently. The design shift from surfacing raw data to guiding decisions was the most impactful single change in the platform.</div></div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <div class="footer-nav">
   <div class="footer-label">UX Portfolio &nbsp;·&nbsp; Sumit Arora</div>
   <div class="footer-name">Enterprise UX · Two case studies</div>
   <a href="cs1-localization.html" class="back-btn">
-    <svg width="14" height="14" fill="none" viewBox="0 0 14 14"><path d="M12 7H2M6 3L2 7l4 4" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Back to Case Study 01
   </a>
 </div>
 
 <script>
+  const toggle = document.getElementById('themeToggle');
+  function syncToggle(theme){ const dark = theme === 'dark'; toggle.setAttribute('aria-pressed', String(dark)); toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme'); }
+  syncToggle(document.documentElement.getAttribute('data-theme'));
+  toggle.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncToggle(next);
+  });
+
   const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
