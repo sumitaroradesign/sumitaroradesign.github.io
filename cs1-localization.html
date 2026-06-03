@@ -70,6 +70,13 @@
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; font-size: 17px; transition: background 0.3s, color 0.3s; }
 
+  /* Synchronized theme switch: fade bg, text, borders, icons and photo together */
+  @media (prefers-reduced-motion: no-preference) {
+    .theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, filter 0.3s ease !important;
+    }
+  }
+
   a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
   .hero a:focus-visible, .problems-bg a:focus-visible, .next-cs a:focus-visible, .theme-toggle:focus-visible { outline-color: var(--focus-on-panel); }
 
@@ -445,10 +452,13 @@
   function syncToggle(theme){ const dark = theme === 'dark'; toggle.setAttribute('aria-pressed', String(dark)); toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme'); }
   syncToggle(document.documentElement.getAttribute('data-theme'));
   toggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
+    const root = document.documentElement;
+    root.classList.add('theme-anim');
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
     try { localStorage.setItem('theme', next); } catch (e) {}
     syncToggle(next);
+    window.setTimeout(() => root.classList.remove('theme-anim'), 340);
   });
 
   const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
