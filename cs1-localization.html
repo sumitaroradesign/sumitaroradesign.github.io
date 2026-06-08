@@ -159,6 +159,9 @@
   .r-label { font-size: 12px; font-weight: 500; color: var(--text); text-align: center; margin-bottom: 0.3rem; line-height: 1.3; }
   .r-sub { font-size: 11px; color: var(--text-3); text-align: center; line-height: 1.5; padding: 0 0.25rem; }
   .r-connector { flex-shrink: 0; width: 24px; height: 1px; background: var(--border); margin-top: 20px; }
+  .r-step.muted .r-dot { background: transparent; border-color: var(--border); color: var(--text-3); opacity: 0.6; }
+  .r-step.muted .r-label { color: var(--text-3); opacity: 0.75; }
+  .r-step.muted .r-sub { color: var(--text-3); opacity: 0.6; }
 
   /* INSIGHT → SOLUTION */
   .is-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2.5rem; }
@@ -372,11 +375,11 @@
     <div class="r-connector"></div>
     <div class="r-step"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
     <div class="r-connector"></div>
-    <div class="r-step"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
+    <div class="r-step muted"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
     <div class="r-connector"></div>
-    <div class="r-step"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
+    <div class="r-step muted"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
     <div class="r-connector"></div>
-    <div class="r-step"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with users, market by market</div></div>
+    <div class="r-step muted"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with a representative set</div></div>
   </div>
   <div class="pullquote" style="margin-top: 3rem;">
     <p>"The investigative work revealed that the system's failures weren't isolated bugs — they were structural. The architecture itself was incompatible with how people needed to work."</p>
@@ -387,8 +390,21 @@
 <div class="section fade-in">
   <div class="chapter"><span class="chapter-num">04</span><h2 class="chapter-title">Insight to solution</h2></div>
   <div class="prose">
-    <p>With the problems mapped, I ran a competitive assessment of comparable tools on the market to evaluate whether we should build or buy, and identified the gaps between IKEA's technical capabilities and what was currently on offer. That gap analysis shaped the platform's architecture and data model — defining what to build natively, what to integrate, and how content had to be structured to scale across markets. Rather than a single big-bang launch, I worked iteratively from there: building, testing, and validating with users market by market, so each release was grounded in evidence before it scaled.</p>
-    <p>From there, each problem area was addressed through a paired insight and solution — moving from what users actually experienced to what the redesigned system needed to provide.</p>
+    <p>With the problems mapped, I ran a competitive assessment of comparable tools on the market to evaluate whether we should build or buy, and identified the gaps between IKEA's technical capabilities and what was currently on offer. That gap analysis shaped the platform's architecture and data model — defining what to build natively, what to integrate, and how content had to be structured to scale across markets. Rather than a single big-bang launch, I worked iteratively — building, testing, and validating with a representative set of markets, so each release was grounded in evidence before it scaled.</p>
+    <p>Prioritized problems were addressed through a paired insight and solution — moving from what users actually experienced to what the redesigned system needed to provide.</p>
+  </div>
+  <div class="research-flow" id="research-flow-2">
+    <div class="r-step muted"><div class="r-dot">01</div><div class="r-label">Evaluative study</div><div class="r-sub">Investigated legacy usage patterns</div></div>
+    <div class="r-connector"></div>
+    <div class="r-step muted"><div class="r-dot">02</div><div class="r-label">User survey</div><div class="r-sub">Mapped friction, roles, and task frequency</div></div>
+    <div class="r-connector"></div>
+    <div class="r-step muted"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
+    <div class="r-connector"></div>
+    <div class="r-step"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
+    <div class="r-connector"></div>
+    <div class="r-step"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
+    <div class="r-connector"></div>
+    <div class="r-step"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with a representative set</div></div>
   </div>
   <div class="is-grid" id="is-grid">
     <div class="is-card">
@@ -475,6 +491,7 @@
     }, { threshold: 0.1 }).observe(parent);
   };
   staggerObs('.r-step', 'research-flow', 100);
+  staggerObs('.r-step', 'research-flow-2', 100);
   staggerObs('.is-card', 'is-grid', 90);
   staggerObs('.learning-card', 'learnings-grid', 80);
 
