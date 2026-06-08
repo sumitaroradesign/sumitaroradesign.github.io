@@ -109,7 +109,7 @@
   .pill-text { font-size: 13px; color: var(--text-2); line-height: 1.4; }
 
   .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; border-top: 1px solid var(--border); padding-top: 2rem; }
-  .meta-item label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.35rem; }
+  .meta-item .ml { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.35rem; }
   .meta-item span { font-family: 'Lora', serif; font-size: 14px; color: var(--text); line-height: 1.4; }
 
   .scroll-cue { position: absolute; bottom: 2.5rem; right: 3rem; display: flex; align-items: center; gap: 0.75rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-panel-2); animation: float 2.5s ease-in-out infinite; }
@@ -134,7 +134,7 @@
   /* CONTEXT */
   .context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
   .context-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.75rem; }
-  .context-card h4 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
+  .context-card h3 { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
   .context-list { list-style: none; }
   .context-list li { font-size: 14px; color: var(--text-2); padding: 0.35rem 0; border-bottom: 1px solid var(--border); line-height: 1.5; display: flex; gap: 0.6rem; }
   .context-list li:last-child { border-bottom: none; }
@@ -293,10 +293,10 @@
       <div class="pill"><div class="pill-val">60%</div><div class="pill-text">Reduction in SLA breaches across markets</div></div>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><label>My role</label><span>UX Designer &amp; Product Strategist</span></div>
-      <div class="meta-item"><label>Scope</label><span>End-to-end: research, system design, delivery</span></div>
-      <div class="meta-item"><label>Scale</label><span>63 markets, global user base</span></div>
-      <div class="meta-item"><label>Domain</label><span>Localization, content management, Internal Platform</span></div>
+      <div class="meta-item"><span class="ml">My role</span><span>UX Designer &amp; Product Strategist</span></div>
+      <div class="meta-item"><span class="ml">Scope</span><span>End-to-end: research, system design, delivery</span></div>
+      <div class="meta-item"><span class="ml">Scale</span><span>63 markets, global user base</span></div>
+      <div class="meta-item"><span class="ml">Domain</span><span>Localization, content management, Internal Platform</span></div>
     </div>
   </div>
   <div class="scroll-cue">
@@ -305,6 +305,7 @@
   </div>
 </header>
 
+<main id="main">
 <div style="background:var(--bg); border-bottom: 1px solid var(--border); padding: 0.85rem 5rem; display:flex; align-items:center; gap:0.65rem; color:var(--text-2);">
   <svg width="14" height="14" fill="none" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="1" y="6" width="12" height="7.5" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M4 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
   <span style="font-size:13px; letter-spacing:0.02em;">Visual designs are not shared in this case study due to a customer NDA. The focus is on process, research, and outcomes.</span>
@@ -319,7 +320,7 @@
   </div>
   <div class="context-grid">
     <div class="context-card">
-      <h4>Who uses it</h4>
+      <h3>Who uses it</h3>
       <ul class="context-list">
         <li>Translators and localization specialists</li>
         <li>Content editors across markets</li>
@@ -328,7 +329,7 @@
       </ul>
     </div>
     <div class="context-card">
-      <h4>What gets localized</h4>
+      <h3>What gets localized</h3>
       <ul class="context-list">
         <li>Product information and specifications</li>
         <li>Marketing and campaign content</li>
@@ -460,6 +461,8 @@
     <div class="learning-card"><div class="learning-num">Learning 04</div><div class="learning-title">Performance is a design requirement</div><div class="learning-body">Users had adapted their behaviour around a slow system — avoiding certain features entirely. Shipping a faster platform changed not just experience but what was possible. Speed is a feature.</div></div>
   </div>
 </div>
+
+</main>
 
 <div class="next-cs">
   <div class="next-label">Next case study</div>
