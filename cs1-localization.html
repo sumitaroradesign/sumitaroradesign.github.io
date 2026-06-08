@@ -80,6 +80,8 @@
   a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
   .hero a:focus-visible, .problems-bg a:focus-visible, .next-cs a:focus-visible, .theme-toggle:focus-visible { outline-color: var(--focus-on-panel); }
 
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 4rem; height: 56px; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s, border-color 0.3s; }
   .nav-name { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: var(--text); text-decoration: none; padding: 0.4rem 0; }
@@ -159,9 +161,9 @@
   .r-label { font-size: 12px; font-weight: 500; color: var(--text); text-align: center; margin-bottom: 0.3rem; line-height: 1.3; }
   .r-sub { font-size: 11px; color: var(--text-3); text-align: center; line-height: 1.5; padding: 0 0.25rem; }
   .r-connector { flex-shrink: 0; width: 24px; height: 1px; background: var(--border); margin-top: 20px; }
-  .r-step.muted .r-dot { background: transparent; border-color: var(--border); color: var(--text-3); opacity: 0.6; }
-  .r-step.muted .r-label { color: var(--text-3); opacity: 0.75; }
-  .r-step.muted .r-sub { color: var(--text-3); opacity: 0.6; }
+  .r-step.muted .r-dot { background: transparent; border-color: var(--border); color: var(--text-3); }
+  .r-step.muted .r-label { color: var(--text-2); }
+  .r-step.muted .r-sub { color: var(--text-3); }
 
   /* INSIGHT → SOLUTION */
   .is-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2.5rem; }
@@ -369,17 +371,18 @@
     <p>Survey responses and previously collected pain points were then mapped into twelve distinct problem areas — a clear, prioritized picture of where and why the system was failing.</p>
   </div>
   <div class="research-flow" id="research-flow">
+    <p class="sr-only">Research and delivery process, six phases total. This section covers the first three phases; phases four to six are detailed in the next section.</p>
     <div class="r-step"><div class="r-dot">01</div><div class="r-label">Evaluative study</div><div class="r-sub">Investigated legacy usage patterns</div></div>
     <div class="r-connector"></div>
     <div class="r-step"><div class="r-dot">02</div><div class="r-label">User survey</div><div class="r-sub">Mapped friction, roles, and task frequency</div></div>
     <div class="r-connector"></div>
     <div class="r-step"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
     <div class="r-connector"></div>
-    <div class="r-step muted"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
     <div class="r-connector"></div>
-    <div class="r-step muted"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">05</div><div class="r-label">Gap analysis</div><div class="r-sub">Shaped architecture and data model</div></div>
     <div class="r-connector"></div>
-    <div class="r-step muted"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with a representative set</div></div>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">06</div><div class="r-label">Iterative testing</div><div class="r-sub">Built and validated with a representative set</div></div>
   </div>
   <div class="pullquote" style="margin-top: 3rem;">
     <p>"The investigative work revealed that the system's failures weren't isolated bugs — they were structural. The architecture itself was incompatible with how people needed to work."</p>
@@ -394,11 +397,12 @@
     <p>Prioritized problems were addressed through a paired insight and solution — moving from what users actually experienced to what the redesigned system needed to provide.</p>
   </div>
   <div class="research-flow" id="research-flow-2">
-    <div class="r-step muted"><div class="r-dot">01</div><div class="r-label">Evaluative study</div><div class="r-sub">Investigated legacy usage patterns</div></div>
+    <p class="sr-only">Research and delivery process, six phases total. This section covers the final three phases; the first three were covered in the previous section.</p>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">01</div><div class="r-label">Evaluative study</div><div class="r-sub">Investigated legacy usage patterns</div></div>
     <div class="r-connector"></div>
-    <div class="r-step muted"><div class="r-dot">02</div><div class="r-label">User survey</div><div class="r-sub">Mapped friction, roles, and task frequency</div></div>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">02</div><div class="r-label">User survey</div><div class="r-sub">Mapped friction, roles, and task frequency</div></div>
     <div class="r-connector"></div>
-    <div class="r-step muted"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
+    <div class="r-step muted" aria-hidden="true"><div class="r-dot">03</div><div class="r-label">Pain synthesis</div><div class="r-sub">Mapped findings into 12 problem areas</div></div>
     <div class="r-connector"></div>
     <div class="r-step"><div class="r-dot">04</div><div class="r-label">Competitive audit</div><div class="r-sub">Assessed build vs buy for each capability</div></div>
     <div class="r-connector"></div>
