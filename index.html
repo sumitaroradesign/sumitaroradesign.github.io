@@ -115,6 +115,14 @@
   }
   footer a:focus-visible, .hero a:focus-visible, .theme-toggle:focus-visible { outline-color: var(--focus-on-panel); }
 
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 200; background: var(--surface); color: var(--accent); padding: 0.6rem 1rem; border-radius: 6px; font-size: 13px; text-decoration: none; border: 1px solid var(--border); }
+  .skip-link:focus { left: 0.75rem; top: 0.6rem; outline: 2px solid var(--focus); outline-offset: 2px; }
+  .to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--accent); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px var(--shadow); opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity 0.25s, transform 0.25s, visibility 0.25s, background 0.3s, border-color 0.3s, color 0.2s; }
+  .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .to-top:hover { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+  @media (max-width: 600px) { .to-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; } }
+
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -125,7 +133,7 @@
     transition: box-shadow 0.3s, background 0.3s, border-color 0.3s;
   }
   nav.scrolled { box-shadow: 0 2px 24px var(--shadow); }
-  .nav-name { font-family: 'Lora', serif; font-size: 16px; font-style: italic; color: var(--text); text-decoration: none; padding: 0.4rem 0; }
+  .nav-name { font-family: 'Lora', serif; font-size: 16px; font-style: italic; color: var(--text); text-decoration: none; padding: 0.4rem 0; white-space: nowrap; }
   .nav-links { display: flex; gap: 2.5rem; align-items: center; }
   .nav-links a:not(.nav-cta) { font-size: 13px; font-weight: 400; color: var(--text-2); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; padding: 0.5rem 0; }
   .nav-links a:hover { color: var(--accent); }
@@ -133,9 +141,16 @@
     padding: 0.55rem 1.3rem; border-radius: 40px;
     border: 1px solid var(--accent); color: var(--accent) !important;
     text-decoration: none; display: inline-flex; align-items: center;
-    font-size: 13px !important; transition: background 0.2s, color 0.2s !important;
+    font-size: 13px !important; white-space: nowrap; transition: background 0.2s, color 0.2s !important;
   }
   .nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+  .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+  .nav-toggle { display: none; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s; }
+  .nav-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .nav-toggle .icon-menu, .nav-toggle .icon-x { display: inline-flex; }
+  .nav-toggle .icon-x { display: none; }
+  .nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
+  .nav-toggle[aria-expanded="true"] .icon-x { display: inline-flex; }
 
   /* Theme toggle */
   .theme-toggle {
@@ -288,13 +303,22 @@
     .footer-links { justify-content: center; }
     .hero-scroll { left: 2rem; }
   }
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-toggle { display: inline-flex; }
+    .nav-links { position: fixed; top: 60px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 12px 28px var(--shadow); padding: 0.5rem 1.5rem 1.25rem; transform: translateY(-10px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; }
+    .nav-links.open { transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
+    .nav-links a:not(.nav-cta) { padding: 0.9rem 0; font-size: 15px; border-bottom: 1px solid var(--border); }
+    .nav-cta { margin-top: 1rem; justify-content: center; }
+  }
   @media (max-width: 600px) {
     nav { padding: 0 1.25rem; height: 56px; }
     .nav-name { font-size: 14px; }
-    .nav-links { gap: 0.75rem; }
-    .nav-links a:not(.nav-cta):not(.theme-toggle) { display: none; }
+    .nav-right { gap: 0.6rem; }
+    .nav-links { top: 56px; }
     .nav-cta { padding: 0.45rem 1rem; font-size: 12px !important; white-space: nowrap; }
     .theme-toggle { width: 34px; height: 34px; }
+    .nav-toggle { width: 34px; height: 34px; }
     .hero { padding-top: 56px; }
     .hero-left { padding: 4.5rem 1.5rem 3.5rem; min-height: auto; }
     .hero-left::after { font-size: 60vw; right: -0.1em; top: 55%; }
@@ -337,21 +361,30 @@
 </head>
 <body>
 
+<a href="#main" class="skip-link">Skip to main content</a>
+
 <nav id="nav">
   <a href="index.html" class="nav-name">Sumit Arora</a>
-  <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#philosophy">Approach</a>
-    <a href="#references">References</a>
-    <a href="#contact" class="nav-cta">Get in touch</a>
+  <div class="nav-right">
+    <div class="nav-links" id="navMenu">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#philosophy">Approach</a>
+      <a href="#references">References</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </div>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark theme" aria-pressed="false">
       <span class="icon-moon" aria-hidden="true"><svg width="17" height="17" fill="none" viewBox="0 0 17 17"><path d="M14 9.5A5.5 5.5 0 017.5 3a5.5 5.5 0 100 11c2.5 0 4.6-1.7 5.2-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
       <span class="icon-sun" aria-hidden="true"><svg width="17" height="17" fill="none" viewBox="0 0 17 17"><circle cx="8.5" cy="8.5" r="3.2" stroke="currentColor" stroke-width="1.3"/><path d="M8.5 1v1.6M8.5 14.4V16M1 8.5h1.6M14.4 8.5H16M3.2 3.2l1.1 1.1M12.7 12.7l1.1 1.1M3.2 13.8l1.1-1.1M12.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
     </button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+      <span class="icon-menu" aria-hidden="true"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      <span class="icon-x" aria-hidden="true"><svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+    </button>
   </div>
 </nav>
 
+<main id="main">
 <section class="hero" id="home">
   <div class="hero-left">
     <div class="hero-eyebrow">UX Designer &amp; Strategist</div>
@@ -502,6 +535,12 @@
   <div class="contact-detail">Based in <strong>Sweden</strong> &nbsp;·&nbsp; Open to remote &amp; hybrid opportunities &nbsp;·&nbsp; <a href="mailto:arora.sumit88@gmail.com">arora.sumit88@gmail.com</a></div>
 </section>
 
+</main>
+
+<button type="button" class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="18" height="18" fill="none" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M9 14V4M4 9l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
 <footer>
   <div class="footer-name">Sumit Arora</div>
   <div class="footer-copy">© 2025 · UX Portfolio</div>
@@ -511,6 +550,28 @@
 <script>
   const navEl = document.getElementById('nav');
   window.addEventListener('scroll', () => { navEl.classList.toggle('scrolled', window.scrollY > 20); });
+
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  if (navToggle && navMenu) {
+    const setMenu = (open) => {
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      navMenu.classList.toggle('open', open);
+    };
+    navToggle.addEventListener('click', () => setMenu(navToggle.getAttribute('aria-expanded') !== 'true'));
+    navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  const toTop = document.getElementById('toTop');
+  if (toTop) {
+    window.addEventListener('scroll', () => { toTop.classList.toggle('show', window.scrollY > 600); });
+    toTop.addEventListener('click', () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
 
   const toggle = document.getElementById('themeToggle');
   function syncToggle(theme) {
